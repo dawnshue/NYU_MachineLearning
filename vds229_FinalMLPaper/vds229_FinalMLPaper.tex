@@ -12,9 +12,21 @@ This project will explore the application of Machine Learning in Technology. Spe
 
 \section*{Introduction}
 Background on Advertising Technology use cases.
-Background on specific problem.
+Background on Cafemom and the specific problem: classify hispanic users
+
+\subsection*{Classifying Rare Events}
+(1, pg141) Rare events are more statistically informative that zeros is seen in the variance matrix
 
 \section*{Methods}
+Demdex has Traits/Segments, uuid and traits/segments collected
+Table generating en/es language to determine hispanic/non-hispanic, 1 for es, 0 for en
+\begin{itemize}
+  \item segment\_hispanic: 80324851 total uuids
+  \item segment\_hispanic: 1698878 hispanic (2 percent)
+  \item segment\_hispanic2: 9733751 total uuids
+  \item segment\_hispanic2: 1868091 hispanic (19 percent)
+\end{itemize}
+
 \begin{Schunk}
 \begin{Sinput}
 > data(example)
@@ -30,6 +42,15 @@ Something like a plot centered.
 
 \section*{Conclusion}
 
-We used \texttt{Sweave} to build this \LaTeX{} document:
+We demonstrated the application of Machine Learning in Advertising Technology, in particular for rare events.
+
+
+\section*{References}
+We used \texttt{RStudio Sweave} to build this \LaTeX{} document
+\begin{itemize}
+  \item http://gking.harvard.edu/files/gking/files/0s.pdf (rare events)
+\end{itemize}
+
+
 
 \end{document}
