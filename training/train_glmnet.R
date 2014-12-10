@@ -1,18 +1,6 @@
 #TRAINING USING GLMNET::BINOMIAL LOGISTIC REGRESSION"
-rm(list=ls()) #clears workspace
-setwd('~/TESTWORK/MLfinalproject/data/')
-
-
-#Some methods and libraries needed
-system("s3cmd get -r s3://cmcdf/scripts/utils.R ~/utils.R")
-source('~/utils.R')
-#source('~/svn/ds/models/utils.R')
-totranlist <- function(x) strsplit(readLines(x),split=",")
-
-
-install.packages("glmnet")
+#install.packages("glmnet")
 library(glmnet)
-
 #TEST EXAMPLE
 x=matrix(rnorm(100*20),100,20)
 g2=sample(1:2,100,replace=TRUE)
@@ -20,41 +8,6 @@ fit2=glmnet(x, g2, family="binomial")
 
 
 
-#get files, do parallel read, unlist, have done this before with some split and shuf
-#convpath<-'~/learn/hispanic=1/'
-#paste0(convpath,list.files(path=convpath, pattern='.ans'))
-
-inlist<-'~/events.txt'
-conv<-parLapply(cl=cl, inlist, totranlist)
-conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
-
-#get files, do parallel read, unlist
-#nconvpath<-'~/learn/hispanic=0/'
-inlist<-'~/nconv.txt.gz' #paste0(nconvpath,list.files(path=nconvpath, pattern='.ans'))
-nconv<-parLapply(cl=cl, inlist, totranlist)
-nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
-
-
-
-allusers<-unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE)
-
-#profile this
-system.time(allt<-as(allusers, "transactions"))
-
-y<-c(rep(1, length(conv)), rep(0, length(nconv)))
-table(y)
-allt
-gc()
-
-lsos()
-dataset <- t(as(allt,'ngCMatrix'))
-myrows<-which(rowSums(dataset)>2)
-y<-y[myrows]
-dataset2<-dataset[myrows,which(colSums(dataset) > 50 &  colSums(dataset)/nrow(dataset) < .9)]
-table(colSums(dataset2))
-dim(dataset2)
-
-library(glmnet)
 fit<-cv.glmnet(x=dataset2,y=y,family="binomial",nfolds=5,alpha=1,nlambda=100,pmax=1500)
 
 str(fit)
@@ -64,6 +17,11 @@ plot(fit2)
 
 mycoef<-coef(fit2, s=fit$lambda.1se)[which(abs(coef(fit2, s=fit$lambda.1se))>0),]
 mycoef
+
+
+
+
+
 
 system('mkdir ~/hl')
 setwd('~/hl')
@@ -121,15 +79,7 @@ dtlookup<-rbind(
   ,c(21,'metrocode')
   ,c(22,'citycode')
   ,c(23,'connspeed')
-  
-  
-  
-  
 )
-
-
-
-
 
 dtlookupdf<-data.frame(dtlookup)
 mresults2<-sqldf("select a.*, b.X7,b.X2 from mresults a left outer join dt3 b on substr(a.mname,1,1) = '4' and a.hname = b.X1")
