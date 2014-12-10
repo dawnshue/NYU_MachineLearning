@@ -6,6 +6,12 @@ system("s3cmd get -r s3://cmcdf/hive_tables/segment/hispanic/train/")
 
 source('~/utils.R') #!!!!!!!!!!
 
+install.packages("glmnet")
+library(glmnet)
+x=matrix(rnorm(100*20),100,20)
+g2=sample(1:2,100,replace=TRUE)
+fit2=glmnet(x, g2, family="binomial")
+
 system("cat * | grep -P '1\t' | awk '{print $2}' > ~/conv.txt")
 system("cat * | grep -P '0\t' | awk '{print $2}' | pigz -c > ~/nconv.txt.gz")
 

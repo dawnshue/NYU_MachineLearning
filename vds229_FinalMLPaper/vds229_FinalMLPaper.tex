@@ -1,5 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage{multicol}
+\usepackage{geometry}
+\geometry{legalpaper, portrait, margin=1in}
 
 \title{Machine Learning in Advertising Technology}
 \author{Vangie Shue}
@@ -22,6 +24,10 @@ Background on Cafemom and the specific problem: classify hispanic users
 (1, pg141) Rare events are more statistically informative that zeros is seen in the variance matrix
 (1, p142) When sampling, we must be careful not to select on X differently for the two samples.
 (2) The problem is that maximum likelihood estimation of the logistic method is well-known to suffer from small-sample bias. The penalized likelihood or Firth method are the general approach to reducing small-sample bias.
+
+\subsection*{Classification Algorithms}
+\subsubsection*{Logistic Regression}
+(4) glmnet
 
 \section*{Methods}
 Demdex has Traits/Segments, uuid and traits/segments collected
@@ -67,6 +73,7 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
 \begin{itemize}
   \item 1 http://gking.harvard.edu/files/gking/files/0s.pdf (rare events)
   \item 2 http://www.statisticalhorizons.com/logistic-regression-for-rare-events (rare events)
+  \item 4 http://cran.r-project.org/web/packages/glmnet/glmnet.pdf
   \item 3 http://stats.stackexchange.com/questions/25389/obtaining-predicted-values-y-1-or-0-from-a-logistic-regression-model-fit
 \end{itemize}
 
