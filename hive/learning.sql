@@ -165,3 +165,19 @@ select * from segment_train_hispanic;
 
 
 
+
+
+
+SET hive.exec.compress.output=false;
+INSERT OVERWRITE TABLE moat_sitelists2 partition(percent='below40', crsize)
+SELECT regexp_replace(mmsite,'\\/(.*)',''), crsize
+FROM moat_view_blacklists
+WHERE prcnt<0.40
+and instr(mmsite, 'bid_attr')<=0
+and instr(mmsite, '.')>0
+and instr(mmsite, '?')<=0
+GROUP BY mmsite, crsize;
+
+
+
+

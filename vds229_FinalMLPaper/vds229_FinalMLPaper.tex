@@ -30,8 +30,8 @@ Background on Cafemom and the specific problem: classify hispanic users
 (4) glmnet
 
 \section*{Methods}
-Demdex has Traits/Segments, uuid and traits/segments collected
-Table generating en/es language to determine hispanic/non-hispanic, 1 for es, 0 for en
+Demdex has Traits\/Segments, uuid and traits\/segments collected
+Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 0 for en
 \begin{itemize}
   \item segment\_hispanic: 80324851 total uuids
   \item segment\_hispanic: 1698878 hispanic (2 percent)
@@ -52,6 +52,8 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 The above is a snippet of code used. 
 
 \section*{Results}
+Compare time for execution \& accuracy between models\/methods. ex.Unweighted\/Non-filtered\/Logistic Regression
+
 The below is a sample graph of data.
 \begin{center}
 Something like a plot centered.
@@ -75,6 +77,8 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 2 http://www.statisticalhorizons.com/logistic-regression-for-rare-events (rare events)
   \item 4 http://cran.r-project.org/web/packages/glmnet/glmnet.pdf
   \item 3 http://stats.stackexchange.com/questions/25389/obtaining-predicted-values-y-1-or-0-from-a-logistic-regression-model-fit
+  \item 5 http://machinelearningmastery.com/an-introduction-to-feature-selection/ (feature selection tips)
+  \item best algorithms: http://www.researchgate.net/post/What\_is\_the\_best\_algorithm\_for\_classification\_task
 \end{itemize}
 
 
