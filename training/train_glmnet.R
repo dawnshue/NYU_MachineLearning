@@ -1,27 +1,30 @@
+#TRAINING USING GLMNET::BINOMIAL LOGISTIC REGRESSION"
 rm(list=ls()) #clears workspace
+setwd('~/TESTWORK/MLfinalproject/data/')
 
-setwd('~/training')
-system('rm *')
-system("s3cmd get -r s3://cmcdf/hive_tables/segment/hispanic/train/")
 
-source('~/utils.R') #!!!!!!!!!!
+#Some methods and libraries needed
+system("s3cmd get -r s3://cmcdf/scripts/utils.R ~/utils.R")
+source('~/utils.R')
+#source('~/svn/ds/models/utils.R')
+totranlist <- function(x) strsplit(readLines(x),split=",")
+
 
 install.packages("glmnet")
 library(glmnet)
+
+#TEST EXAMPLE
 x=matrix(rnorm(100*20),100,20)
 g2=sample(1:2,100,replace=TRUE)
 fit2=glmnet(x, g2, family="binomial")
 
-system("cat * | grep -P '1\t' | awk '{print $2}' > ~/conv.txt")
-system("cat * | grep -P '0\t' | awk '{print $2}' | pigz -c > ~/nconv.txt.gz")
 
-totranlist <- function(x)  strsplit(readLines(x),split=",") 
 
 #get files, do parallel read, unlist, have done this before with some split and shuf
 #convpath<-'~/learn/hispanic=1/'
 #paste0(convpath,list.files(path=convpath, pattern='.ans'))
 
-inlist<-'~/conv.txt'
+inlist<-'~/events.txt'
 conv<-parLapply(cl=cl, inlist, totranlist)
 conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
 

@@ -72,6 +72,8 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 2 http://www.statisticalhorizons.com/logistic-regression-for-rare-events (rare events)
   \item 4 http://cran.r-project.org/web/packages/glmnet/glmnet.pdf
   \item 3 http://stats.stackexchange.com/questions/25389/obtaining-predicted-values-y-1-or-0-from-a-logistic-regression-model-fit
+  \item 5 http://machinelearningmastery.com/an-introduction-to-feature-selection/ (feature selection tips)
+  \item best algorithms: http://www.researchgate.net/post/What_is_the_best_algorithm_for_classification_task
 \end{itemize}
 
 

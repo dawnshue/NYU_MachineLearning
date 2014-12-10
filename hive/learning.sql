@@ -126,22 +126,42 @@ set hive.optimize.skewjoin=false;
 insert overwrite table segment_train_hispanic
 select class, collect_set(varstring) 
 from  hash_lookup hlt  join ( select uuid, varstring, class from
-                (select a.uuid, a.outvars, c.class 
-                 from user_attribs3 a
-                 join user_flags b on a.uuid = b.uuid
-                 join segment_hispanic2 c on a.uuid = c.uuid
-                 where b.bot = 0 and b.us = 1 and b.has_domains = 1
+(select a.uuid, a.outvars, c.class 
+from user_attribs3 a
+join user_flags b on a.uuid = b.uuid
+--join segment_hispanic c on a.uuid = c.uuid
+--join (select * from segment_hispanic tablesample(bucket 1 out of 8)) c on a.uuid = c.uuid
+join segment_hispanic2 c on a.uuid = c.uuid
+where b.bot = 0 and b.us = 1 and b.has_domains = 1
 ) uf lateral view explode(outvars) uf_exp as varstring ) uf_exp2 on (hlt.hashname = uf_exp2.varstring and split(uf_exp2.varstring, '_')[0] = hlt.datatype) left outer join demdex_traits2 ddt on (hlt.datatype = 4 and hlt.variable = ddt.traitid)
 where ((ddt.folderid is null and hlt.datatype <> 4) or (ddt.fpath not like '%3rd-PartyData%' 
-           and ddt.fpath not like '%UUID%'
-           and ddt.fpath not like '%Universal-UserLevel/Samp%'
-           and ddt.fpath not like '%Universal-UserLevel/Accept%'
-           and ddt.fpath not like '%GreatSchools/Universal%'
-         )
-       )
+and ddt.fpath not like '%UUID%'
+and ddt.fpath not like '%Universal-UserLevel/Samp%'
+and ddt.fpath not like '%Universal-UserLevel/Accept%'
+and ddt.fpath not like '%GreatSchools/Universal%'))
 and datatype in (4, 7, 8, 9, 10, 11,12,13,14,15, 16,17,19,20,21,22,23)
 group by uuid, class;
 
+----------------
+--SEGMENT_HISPANIC SAMPLE
+--Divide data into 8 buckets, 7 used for training and 1 for testing
+----------------
+create external table if not exists segment_hispanic_sample (class smallint, outvars string)
+clustered by (outvars) into 8 buckets
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' collection items terminated by ','
+stored as textfile 
+location '';
+
+insert overwrite table segment_hispanic_sample
+select * from segment_train_hispanic;
+
+--insert overwrite table segment_hispanic_sample partition(sample='test')
+--select * from segment_train_hispanic tablesample(bucket 1 out of 8 on rand()) s;
+
+--insert overwrite table segment_hispanic_sample partition(sample='train')
+--select a.* from segment_train_hispanic a
+--left outer join segment_hispanic_sample b on a.class = b.class and a.outvars = b.outvars
+--where b.sample='test' and b.outvars is null;
 
 
 
