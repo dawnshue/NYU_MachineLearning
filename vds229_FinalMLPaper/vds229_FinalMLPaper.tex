@@ -1,4 +1,6 @@
 \documentclass[a4paper]{article}
+\usepackage{multicol}
+
 \title{Machine Learning in Advertising Technology}
 \author{Vangie Shue}
 
@@ -10,12 +12,16 @@
 \section*{Abstract}
 This project will explore the application of Machine Learning in Technology. Specifically, we will seek to develop a reliable process for developing a classification algorithm on given data.
 
+\begin{multicols}{2}
+
 \section*{Introduction}
 Background on Advertising Technology use cases.
 Background on Cafemom and the specific problem: classify hispanic users
 
 \subsection*{Classifying Rare Events}
 (1, pg141) Rare events are more statistically informative that zeros is seen in the variance matrix
+(1, p142) When sampling, we must be careful not to select on X differently for the two samples.
+(2) The problem is that maximum likelihood estimation of the logistic method is well-known to suffer from small-sample bias. The penalized likelihood or Firth method are the general approach to reducing small-sample bias.
 
 \section*{Methods}
 Demdex has Traits/Segments, uuid and traits/segments collected
@@ -26,6 +32,11 @@ Table generating en/es language to determine hispanic/non-hispanic, 1 for es, 0 
   \item segment\_hispanic2: 9733751 total uuids
   \item segment\_hispanic2: 1868091 hispanic (19 percent)
 \end{itemize}
+
+\subsection*{Logistic Regression}
+We used \texttt{glmnet} to generate logistic regression model.
+Then \texttt{predict.glm} is used to predict on the validation sample.
+(3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -41,14 +52,22 @@ Something like a plot centered.
 \end{center}
 
 \section*{Conclusion}
-
 We demonstrated the application of Machine Learning in Advertising Technology, in particular for rare events.
+
+Cannot accept comparisons without consideration to the implementation. Some may provide more "tuning" than other algorithms and therefore appear more accurate. However, we demonstrate which algorithm will work best for our usage.
+
+\section*{Acknowledgements}
+Patrick McCann \& Cafemom, Professor Mohri
+
+\end{multicols}
 
 
 \section*{References}
 We used \texttt{RStudio Sweave} to build this \LaTeX{} document
 \begin{itemize}
-  \item http://gking.harvard.edu/files/gking/files/0s.pdf (rare events)
+  \item 1 http://gking.harvard.edu/files/gking/files/0s.pdf (rare events)
+  \item 2 http://www.statisticalhorizons.com/logistic-regression-for-rare-events (rare events)
+  \item 3 http://stats.stackexchange.com/questions/25389/obtaining-predicted-values-y-1-or-0-from-a-logistic-regression-model-fit
 \end{itemize}
 
 
