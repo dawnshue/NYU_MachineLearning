@@ -2,20 +2,46 @@
 #install.packages("glmnet")
 library(glmnet)
 #TEST EXAMPLE
-x=matrix(rnorm(100*20),100,20)
-g2=sample(1:2,100,replace=TRUE)
-fit2=glmnet(x, g2, family="binomial")
+dataset2<-matrix(abs(round(rnorm(100*20)))%%2,100,20)
+y<-sample(1:2,100,replace=TRUE)
+fit<-glmnet(dataset2, y, family="binomial")
+testdataset<-matrix(abs(round(rnorm(100*20)))%%2,100,20)
+head(dataset2)
+head(testdataset)
 
+#GENERATING MODEL
+#Fit 1: using defaults: lasso penalty, nlambda=100
+system.time(fit1<-glmnet(dataset2, y, family="binomial"))
+#Fit 2: lasso penalty, lamdba from 10-fold cross-validation
+system.time(cv2<-cv.glmnet(x=dataset2,y=y,family="binomial",nfolds=10,alpha=1))
+system.time(fit2<-glmnet(x=dataset2,y=y,family="binomial",alpha=1, lambda=cv2$lambda))
+#Fit 3: current version
+system.time(cv3<-cv.glmnet(x=dataset2,y=y,family="binomial",nfolds=5,alpha=1,nlambda=100,pmax=1500))
+system.time(fit3<-glmnet(x=dataset2,y=y,family="binomial",alpha=1, lambda=cv3$lambda))
 
-
-fit<-cv.glmnet(x=dataset2,y=y,family="binomial",nfolds=5,alpha=1,nlambda=100,pmax=1500)
-
-str(fit)
-
-fit2<-glmnet(x=dataset2,y=y,family="binomial",alpha=1, lambda=fit$lambda)
+plot(fit1)
 plot(fit2)
+plot(fit3)
 
-mycoef<-coef(fit2, s=fit$lambda.1se)[which(abs(coef(fit2, s=fit$lambda.1se))>0),]
+#TESTING MODEL
+system.time(pred<-predict(object=fit, newx=testdataset, type="response"))
+head(pred)
+
+
+#install.packages("ipred")
+library(ipred)
+mymodel.glm<-function(formula, data) {
+  glm(formula, data, family=binomial(link=logit))
+}
+mypredict.glm<-function(object, newdata) {
+  predict(object, newdata, type="response")
+}
+est2<-errorest(data=testdataset
+               , model=fit2
+               , model=glm
+               , predict=mypredict.glm)
+
+mycoef<-coef(fit2, s=cv2$lambda.1se)[which(abs(coef(fit2, s=cv2$lambda.1se))>0),]
 mycoef
 
 

@@ -82,6 +82,7 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item best algorithms: http://www.researchgate.net/post/What\_is\_the\_best\_algorithm\_for\_classification\_task
   \item http://en.wikibooks.org/wiki/Data\_Mining\_Algorithms\_In\_R/Classification/SVM (SVM)
   \item http://www.jstatsoft.org/v61/i10/paper (random ferns)
+  \item http://www.statmethods.net/advstats/cart.html (rpart and random forest)
 \end{itemize}
 
 
