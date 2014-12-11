@@ -26,7 +26,9 @@ Background on Cafemom and the specific problem: classify hispanic users
 
 \subsection*{Classification Algorithms}
 \subsubsection*{Logistic Regression}
-(4) glmnet
+\subsubsection*{Generalized Linear Model}
+(4) glmnet fits a generalized linear model via penalized maximum likelihood.
+(6) it can deal with all shapes of data, including very large sparse data matrices.
 
 \section*{Methods}
 Demdex has Traits\/Segments, uuid and traits\/segments collected
@@ -83,6 +85,7 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item http://en.wikibooks.org/wiki/Data\_Mining\_Algorithms\_In\_R/Classification/SVM (SVM)
   \item http://www.jstatsoft.org/v61/i10/paper (random ferns)
   \item http://www.statmethods.net/advstats/cart.html (rpart and random forest)
+  \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
 \end{itemize}
 
 

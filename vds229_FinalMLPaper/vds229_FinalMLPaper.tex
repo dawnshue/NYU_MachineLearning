@@ -27,7 +27,9 @@ Background on Cafemom and the specific problem: classify hispanic users
 
 \subsection*{Classification Algorithms}
 \subsubsection*{Logistic Regression}
-(4) glmnet
+\subsubsection*{Generalized Linear Model}
+(4) glmnet fits a generalized linear model via penalized maximum likelihood.
+(6) it can deal with all shapes of data, including very large sparse data matrices.
 
 \section*{Methods}
 Demdex has Traits\/Segments, uuid and traits\/segments collected
@@ -43,6 +45,10 @@ Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 
 We used \texttt{glmnet} to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
 (3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
+
+\subsection*{Random Forest or Ferns}
+
+\subsection*{Support Vector Machines}
 
 \begin{Schunk}
 \begin{Sinput}
@@ -79,6 +85,10 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 3 http://stats.stackexchange.com/questions/25389/obtaining-predicted-values-y-1-or-0-from-a-logistic-regression-model-fit
   \item 5 http://machinelearningmastery.com/an-introduction-to-feature-selection/ (feature selection tips)
   \item best algorithms: http://www.researchgate.net/post/What\_is\_the\_best\_algorithm\_for\_classification\_task
+  \item http://en.wikibooks.org/wiki/Data\_Mining\_Algorithms\_In\_R/Classification/SVM (SVM)
+  \item http://www.jstatsoft.org/v61/i10/paper (random ferns)
+  \item http://www.statmethods.net/advstats/cart.html (rpart and random forest)
+  \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
 \end{itemize}
 
 

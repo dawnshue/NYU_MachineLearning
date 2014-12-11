@@ -9,22 +9,21 @@ totranlist <- function(x) strsplit(readLines(x),split=",")
 setwd('~/TESTWORK/MLfinalproject/data/')
 
 
+#TRAINING DATA ################################
 #Unlist the features in class=1
-inlist<-'events.txt'
+inlist<-'train_events.txt'
 conv<-parLapply(cl=cl, inlist, totranlist)
 conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
 
 #Unlist the features in class=0
-inlist<-'nonevents.txt.gz'
+inlist<-'train_nonevents.txt.gz'
 nconv<-parLapply(cl=cl, inlist, totranlist)
 nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
 
-
 allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
 allt
-dataset <- t(as(allt,'ngCMatrix'))
+traindata<- t(as(allt,'ngCMatrix'))
 y<-c(rep(1, length(conv)), rep(0, length(nconv)))
-table(y)
 
 
 rm(conv)
@@ -32,13 +31,38 @@ rm(nconv)
 gc()
 lsos()
 
+#TESTING DATA ################################
+inlist<-'test_events.txt'
+conv<-parLapply(cl=cl, inlist, totranlist)
+conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
+inlist<-'test_nonevents.txt.gz'
+nconv<-parLapply(cl=cl, inlist, totranlist)
+nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
+allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
+allt
+testdata<- t(as(allt,'ngCMatrix'))
+ytest<-c(rep(1, length(conv)), rep(0, length(nconv)))
+rm(conv)
+rm(nconv)
+gc()
+lsos()
+
 
 #Filtering lines out#
+dataset<-traindata
 myrows<-which(rowSums(dataset)>2) #if record<=2 features
 y<-y[myrows]
 dataset2<-dataset[myrows,which(colSums(dataset)>50 & colSums(dataset)/nrow(dataset)<.9)]
+#traindata<-dataset2
+#testdata<-dataset2
 #####################
 
-dataset2<-dataset
-table(colSums(dataset2))
-dim(dataset2)
+#SUMMARY============================
+#TRAIN DATA
+table(colSums(traindata))
+dim(traindata)
+table(y)
+#TEST DATA
+table(colSums(testdata))
+dim(testdata)
+table(ytest)
