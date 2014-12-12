@@ -1,16 +1,25 @@
 #TRAINING USING GBM::Gradient Boosted Model"
 #Video tutorial: http://vimeo.com/71992876
 
-#install.packages("glmnet")
-fit<-gbm.fit(x=dataset2
+#install.packages("gbm")
+library(gbm)
+
+
+fit<-gbm.fit(x=traindata
              , y=y
              , distribution="bernoulli"
              , n.trees = 1000
-             , shrinkage = 0.01
+             , shrinkage = 0.1
              , interaction.depth = 3
              , n.minobsinnode = 10
-             , ntrain = round(end_trn * 0.8)
-             , verbose = TRUE)
-pred<-predict(object=fit
-        , newx=testdataset
+             , nTrain = round(dim(traindata)[1] * 0.8)
+             , verbose = TRUE #prints preliminary output
+             )
+
+summary(fit)
+newtrees<-gbm.perf(fit) #optimal number of trees based on cv
+
+pred<-predict.gbm(object=fit
+        , newdata=testdata
+        , n.trees=newtrees
         , type="response")

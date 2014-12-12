@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.18)  11 DEC 2014 12:21
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.18)  11 DEC 2014 14:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -371,56 +371,55 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 13.
-LaTeX Font Info:    Try loading font information for TS1+aer on input line 38.
+LaTeX Font Info:    Try loading font information for TS1+aer on input line 42.
 
 (/usr/share/R/share/texmf/tex/latex/ts1aer.fd
 File: ts1aer.fd 
 )
 LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 38.
-LaTeX Font Info:    Try loading font information for T1+aett on input line 45.
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 42.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 49.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 80.
+(Font)              <7> on input line 86.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 80.
+(Font)              <5> on input line 86.
+ [1
 
-Overfull \hbox (0.8797pt too wide) in paragraph at lines 85--86
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (0.8797pt too wide) in paragraph at lines 91--92
 []\T1/aer/m/n/10 3 http://stats.stackexchange.com/questions/25389/obtaining-pre
 dicted-values-y-1-or-0-from-a-logistic-
  []
 
 
-Overfull \hbox (1.76378pt too wide) in paragraph at lines 87--88
+Overfull \hbox (1.76378pt too wide) in paragraph at lines 93--94
 []\T1/aer/m/n/10 best al-go-rithms: http://www.researchgate.net/post/What_is_th
 e_best_algorithm_for_classification_task 
  []
 
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-(./vds229_FinalMLPaper.aux) ) 
+[2] (./vds229_FinalMLPaper.aux) ) 
 Here is how much of TeX's memory you used:
  3305 strings out of 495028
  47372 string characters out of 6181497
- 114078 words of memory out of 5000000
+ 118078 words of memory out of 5000000
  6432 multiletter control sequences out of 15000+600000
  29209 words of font info for 64 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,6n,29p,259b,264s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/vshue/.texmf-var/fonts/pk/ljfour/jknappen/
-ec/tcrm1000.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on vds229_FinalMLPaper.pdf (2 pages, 102895 bytes).
+ 37i,6n,29p,355b,264s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/vshue/.texmf-var/fonts/pk/ljfour/jknap
+pen/ec/tcrm1000.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on vds229_FinalMLPaper.pdf (2 pages, 104592 bytes).
 PDF statistics:
  49 PDF objects out of 1000 (max. 8388607)
  34 compressed objects within 1 object stream

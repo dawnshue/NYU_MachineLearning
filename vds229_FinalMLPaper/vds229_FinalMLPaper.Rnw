@@ -29,6 +29,10 @@ Background on Cafemom and the specific problem: classify hispanic users
 \subsubsection*{Generalized Linear Model}
 (4) glmnet fits a generalized linear model via penalized maximum likelihood.
 (6) it can deal with all shapes of data, including very large sparse data matrices.
+\subsubsection*{Generalized Boosted Model}
+(7) Advantages over logistic regression: robust to outliers, can make predictions on missing data, handles unequal class sizes and unbalanced predictor variables, tend to have greater predictive ability
+(7) Drawbacks: trees can overfit especially if the number of ending nodes is small or number of trees is too large, definitely want to use cross validation
+(7) Use prediction rate as a measure of goodness of fit
 
 \section*{Methods}
 Demdex has Traits\/Segments, uuid and traits\/segments collected
@@ -45,6 +49,8 @@ We used \texttt{glmnet} to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
 (3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
 
+\subsection*{Generalized Boosted Regression Model}
+(7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
 \subsection*{Random Forest or Ferns}
 
 \subsection*{Support Vector Machines}
@@ -86,6 +92,7 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item http://www.jstatsoft.org/v61/i10/paper (random ferns)
   \item http://www.statmethods.net/advstats/cart.html (rpart and random forest)
   \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
+  \item 7 http://vimeo.com/71992876 (gbm)
 \end{itemize}
 
 

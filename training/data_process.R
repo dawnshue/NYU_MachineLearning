@@ -6,6 +6,14 @@ source('utils.R')
 totranlist <- function(x) strsplit(readLines(x),split=",")
 
 
+#SMALL TEST EXAMPLE##
+traindata<-matrix(abs(round(rnorm(100*20)))%%2,100,20)
+y<-sample(0:1,100,replace=TRUE)
+head(traindata)
+head(testdata)
+fit<-glmnet(dataset2, y, family="binomial")
+#####################
+
 setwd('~/TESTWORK/MLfinalproject/data/')
 
 
