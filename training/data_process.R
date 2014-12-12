@@ -47,26 +47,22 @@ inlist<-'~/MLfinalproject/data/weighted_nonevents.txt.gz'
 nconv<-parLapply(cl=cl, inlist, totranlist)
 nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
 lnon<-length(nconv)
-#percent events
-pcnt<-levents/lnon
+#Percent data that is events
+pevents<-levents/(levents+lnon)
 
 
 #MERGE DATA ################################
+mdata<-1000000 #Number of rows of data to use
 #This ensures that any manipulations of data will occur for both test & train data
-allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
+allt<-as(unlist(list(conv[1:round((pevents)*mdata)]
+                     ,nconv[1:round(1-pevents*mdata)])
+                , recursive=FALSE, use.names=FALSE),"transactions")
 allt
-traindata<- t(as(allt,'ngCMatrix'))
-trainy<-c(rep(1, length(conv)), rep(0, length(nconv)))
-
-# allt<-as(unlist(list(conv2,nconv2), recursive=FALSE, use.names=FALSE),"transactions")
-# allt
-# testdata<- t(as(allt,'ngCMatrix'))
-# testy<-c(rep(1, length(conv2)), rep(0, length(nconv2)))
+alldata<- t(as(allt,'ngCMatrix'))
+ally<-c(rep(1, round((pevents)*mdata)), rep(0, round((1-pevents)*mdata)))
 
 rm(conv)
 rm(nconv)
-rm(conv2)
-rm(nconv2)
 rm(allt)
 rm(inlist)
 gc()
