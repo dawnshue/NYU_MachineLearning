@@ -29,3 +29,5 @@ system.time(pred<-predict(object=fit
                           ))
 
 table(pred, ytest, dnn=list('predicted','actual'))
+accuracy<-1-(sum(abs(as.numeric(as.character(ytest)) - 
+                       as.numeric(as.character(pred))))/length(ytest))

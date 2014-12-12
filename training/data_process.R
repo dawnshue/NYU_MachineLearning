@@ -19,11 +19,11 @@ datatrain<-matrix(abs(round(rnorm(150*4)))%%2,150,4)
 y<-sample(0:1,100,replace=TRUE)
 datatrain[which(iris[1]>5.5),1]<-1
 datatrain[which(iris[1]<=5.5),1]<-0
-datatrain[which(iris[2]>3.4),2]<-0
+datatrain[which(iris[2]>3.4),2]<-1
 datatrain[which(iris[2]<=3.4),2]<-0
-datatrain[which(iris[3]>2),3]<-0
+datatrain[which(iris[3]>2),3]<-1
 datatrain[which(iris[3]<=2),3]<-0
-datatrain[which(iris[4]>0.5),4]<-0
+datatrain[which(iris[4]>0.5),4]<-1
 datatrain[which(iris[4]<=0.5),4]<-0
 ytrain<-c(1:150)
 ytrain[which(iris[5]=='virginica')]<-1
