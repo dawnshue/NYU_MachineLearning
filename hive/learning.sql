@@ -130,8 +130,8 @@ from  hash_lookup hlt  join ( select uuid, varstring, class from
 from user_attribs3 a
 join user_flags b on a.uuid = b.uuid
 --join segment_hispanic c on a.uuid = c.uuid
---join (select * from segment_hispanic tablesample(bucket 1 out of 8)) c on a.uuid = c.uuid
-join segment_hispanic2 c on a.uuid = c.uuid
+join (select * from segment_hispanic tablesample(bucket 1 out of 8)) c on a.uuid = c.uuid
+--join segment_hispanic2 c on a.uuid = c.uuid
 where b.bot = 0 and b.us = 1 and b.has_domains = 1
 ) uf lateral view explode(outvars) uf_exp as varstring ) uf_exp2 on (hlt.hashname = uf_exp2.varstring and split(uf_exp2.varstring, '_')[0] = hlt.datatype) left outer join demdex_traits2 ddt on (hlt.datatype = 4 and hlt.variable = ddt.traitid)
 where ((ddt.folderid is null and hlt.datatype <> 4) or (ddt.fpath not like '%3rd-PartyData%' 

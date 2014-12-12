@@ -77,16 +77,24 @@ rm(nconv)
 rm(conv2)
 rm(nconv2)
 rm(allt)
+rm(inlist)
 gc()
 lsos()
 
+#SAVE DATA
+savefile<-"hispanic_weighted.RData"
+save.image(file=savefile)
+system(paste0("s3cmd put ", savefile," s3://cmcdf/hive_tables/segment/hispanic/"))
 
 #Filtering data of sparse features ################################
 y<-trainy
 dataset<-traindata
-keeprows<-which(rowSums(traindata)>2) #if record<=2 features
-keepcols<-which(colSums(traindata)>50 & colSums(traindata)/nrow(traindata)<.9)
-y<-trainy[keeprows]
+dataset_test<-testdata
+
+#keeprows<-which(rowSums(traindata)>2) #if record<=2 features
+keepcols<-which(colSums(traindata)>50)
+# & colSums(traindata)/nrow(traindata)<.9
+#y<-trainy[keeprows]
 dataset<-traindata[keeprows,keepcols]
 dataset_test<-testdata[,keepcols]
 #traindata<-dataset2
@@ -95,15 +103,12 @@ dataset_test<-testdata[,keepcols]
 
 #SUMMARY============================
 #TRAIN DATA
+#table(colSums(traindata))
 dim(traindata)
-table(colSums(dataset))
 dim(dataset)
 table(trainy)
 #TEST DATA
-table(colSums(testdata))
+#table(colSums(dataset_test))
 dim(testdata)
+dim(dataset_test)
 table(testy)
-#SAVE DATA
-savefile<-"hispanic_weighted.RData"
-save.image(file=savefile)
-system(paste0("s3cmd put ", savefile," s3://cmcdf/hive_tables/segment/hispanic/"))
