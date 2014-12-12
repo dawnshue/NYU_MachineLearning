@@ -59,7 +59,8 @@ nconv2<-parLapply(cl=cl, inlist, totranlist)
 nconv2<-unlist(nconv2,recursive=FALSE, use.names=FALSE)
 lnconv2<-length(nconv2)
 
-#MERGE TRAINING & TEST DATA
+
+#MERGE TRAINING & TEST DATA ################################
 #This ensures that any manipulations of data will occur for both
 allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
 allt
@@ -80,17 +81,20 @@ gc()
 lsos()
 
 
-#Filtering training data for sparse features
+#Filtering data of sparse features ################################
+keeprows<-c(1:length(trainy))
 keeprows<-which(rowSums(traindata)>2) #if record<=2 features
 keepcols<-which(colSums(traindata)>50 & colSums(traindata)/nrow(traindata)<.9)
 y<-y[keeprows]
 dataset<-traindata[keeprows,keepcols]
+dataset_test<-testdata[,keepcols]
 #traindata<-dataset2
 #testdata<-dataset2
 #####################
 
 #SUMMARY============================
 #TRAIN DATA
+dim(traindata)
 table(colSums(dataset))
 dim(dataset)
 table(trainy)
@@ -98,3 +102,7 @@ table(trainy)
 table(colSums(testdata))
 dim(testdata)
 table(testy)
+#SAVE DATA
+savefile<-"hispanic_weighted.RData"
+save.image(file=savefile)
+system(paste0("s3cmd put ", savefile," s3://cmcdf/hive_tables/segment/hispanic/"))
