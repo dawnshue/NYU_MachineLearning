@@ -36,41 +36,32 @@ fit<-glmnet(traindata, y, family="binomial")
 
 
 setwd('~/MLfinalproject/data/')
-#TRAINING DATA ################################
+#LOAD DATA ################################
 #Unlist the features in class=1
-inlist<-'~/MLfinalproject/data/train_events.txt'
+inlist<-'~/MLfinalproject/data/weighted_events.txt'
 conv<-parLapply(cl=cl, inlist, totranlist)
 conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
-lconv<-length(conv)
+levents<-length(conv)
 #Unlist the features in class=0
-inlist<-'~/MLfinalproject/data/train_nonevents.txt.gz'
+inlist<-'~/MLfinalproject/data/weighted_nonevents.txt.gz'
 nconv<-parLapply(cl=cl, inlist, totranlist)
 nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
-lnconv<-length(nconv)
+lnon<-length(nconv)
 #percent events
-pcnt<-lconv/lnconv
-#TESTING DATA ################################
-inlist<-'~/MLfinalproject/data/test_events.txt'
-conv2<-parLapply(cl=cl, inlist, totranlist)
-conv2<-unlist(conv2,recursive=FALSE, use.names=FALSE)
-lconv2<-length(conv2)
-inlist<-'~/MLfinalproject/data/test_nonevents.txt.gz'
-nconv2<-parLapply(cl=cl, inlist, totranlist)
-nconv2<-unlist(nconv2,recursive=FALSE, use.names=FALSE)
-lnconv2<-length(nconv2)
+pcnt<-levents/lnon
 
 
-#MERGE TRAINING & TEST DATA ################################
-#This ensures that any manipulations of data will occur for both
+#MERGE DATA ################################
+#This ensures that any manipulations of data will occur for both test & train data
 allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
 allt
 traindata<- t(as(allt,'ngCMatrix'))
 trainy<-c(rep(1, length(conv)), rep(0, length(nconv)))
 
-allt<-as(unlist(list(conv2,nconv2), recursive=FALSE, use.names=FALSE),"transactions")
-allt
-testdata<- t(as(allt,'ngCMatrix'))
-testy<-c(rep(1, length(conv2)), rep(0, length(nconv2)))
+# allt<-as(unlist(list(conv2,nconv2), recursive=FALSE, use.names=FALSE),"transactions")
+# allt
+# testdata<- t(as(allt,'ngCMatrix'))
+# testy<-c(rep(1, length(conv2)), rep(0, length(nconv2)))
 
 rm(conv)
 rm(nconv)
@@ -81,24 +72,21 @@ rm(inlist)
 gc()
 lsos()
 
-#SAVE DATA
-savefile<-"hispanic_weighted.RData"
-save.image(file=savefile)
-system(paste0("s3cmd put ", savefile," s3://cmcdf/hive_tables/segment/hispanic/"))
 
 #Filtering data of sparse features ################################
-y<-trainy
-dataset<-traindata
-dataset_test<-testdata
+y<-testy
+dataset<-testdata
+#keeprows<-which(rowSums(dataset)>2) #if record<=2 features
+keepcols<-which(colSums(dataset)>50)
+# & colSums(dataset)/nrow(dataset)<.9
+#y<-y[keeprows]
+#dataset<-dataset[keeprows,keepcols]
+dataset<-dataset[,keepcols]
 
-#keeprows<-which(rowSums(traindata)>2) #if record<=2 features
-keepcols<-which(colSums(traindata)>50)
-# & colSums(traindata)/nrow(traindata)<.9
-#y<-trainy[keeprows]
-dataset<-traindata[keeprows,keepcols]
-dataset_test<-testdata[,keepcols]
-#traindata<-dataset2
-#testdata<-dataset2
+nlines<-dim(testdata)[1]
+ptest<-0.2 #Percent of data to use as test
+lconv*0.2
+lnconv*0.2
 #####################
 
 #SUMMARY============================
