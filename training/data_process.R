@@ -1,76 +1,100 @@
 rm(list=ls()) #clears workspace
 
 #Some methods and libraries needed
-setwd('~/TESTWORK/MLfinalproject/training/')
+setwd('~/MLfinalproject/training/')
 source('utils.R')
-totranlist <- function(x) strsplit(readLines(x),split=",")
+totranlist <- function(x) {
+  tryCatch({
+    strsplit(readLines(x),split=",")
+  },
+  error=function(e) {
+    print(e)
+    stop(e)
+  })
+}
 
 
 #SMALL TEST EXAMPLE##
-traindata<-matrix(abs(round(rnorm(100*20)))%%2,100,20)
+traindata<-matrix(abs(round(rnorm(150*4)))%%2,150,4)
 y<-sample(0:1,100,replace=TRUE)
+traindata[which(iris[1]>5.5),1]<-1
+traindata[which(iris[1]<=5.5),1]<-0
+traindata[which(iris[2]>3.4),2]<-0
+traindata[which(iris[2]<=3.4),2]<-0
+traindata[which(iris[3]>2),3]<-0
+traindata[which(iris[3]<=2),3]<-0
+traindata[which(iris[4]>0.5),4]<-0
+traindata[which(iris[4]<=0.5),4]<-0
+y<-c(1:150)
+y[which(iris[5]=='virginica')]<-1
+y[which(iris[5]!='virginica')]<-0
 head(traindata)
-head(testdata)
-fit<-glmnet(dataset2, y, family="binomial")
+y
+dim(traindata)
+fit<-glmnet(traindata, y, family="binomial")
 #####################
 
-setwd('~/TESTWORK/MLfinalproject/data/')
 
-
+setwd('~/MLfinalproject/data/')
 #TRAINING DATA ################################
 #Unlist the features in class=1
-inlist<-'train_events.txt'
+inlist<-'~/MLfinalproject/data/train_events.txt'
 conv<-parLapply(cl=cl, inlist, totranlist)
 conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
-
+lconv<-length(conv)
 #Unlist the features in class=0
-inlist<-'train_nonevents.txt.gz'
+inlist<-'~/MLfinalproject/data/train_nonevents.txt.gz'
 nconv<-parLapply(cl=cl, inlist, totranlist)
 nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
+lnconv<-length(nconv)
+#percent events
+pcnt<-lconv/lnconv
+#TESTING DATA ################################
+inlist<-'~/MLfinalproject/data/test_events.txt'
+conv2<-parLapply(cl=cl, inlist, totranlist)
+conv2<-unlist(conv2,recursive=FALSE, use.names=FALSE)
+lconv2<-length(conv2)
+inlist<-'~/MLfinalproject/data/test_nonevents.txt.gz'
+nconv2<-parLapply(cl=cl, inlist, totranlist)
+nconv2<-unlist(nconv2,recursive=FALSE, use.names=FALSE)
+lnconv2<-length(nconv2)
 
+#MERGE TRAINING & TEST DATA
+#This ensures that any manipulations of data will occur for both
 allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
 allt
 traindata<- t(as(allt,'ngCMatrix'))
-y<-c(rep(1, length(conv)), rep(0, length(nconv)))
+trainy<-c(rep(1, length(conv)), rep(0, length(nconv)))
 
-
-rm(conv)
-rm(nconv)
-gc()
-lsos()
-
-#TESTING DATA ################################
-inlist<-'test_events.txt'
-conv<-parLapply(cl=cl, inlist, totranlist)
-conv<-unlist(conv,recursive=FALSE, use.names=FALSE)
-inlist<-'test_nonevents.txt.gz'
-nconv<-parLapply(cl=cl, inlist, totranlist)
-nconv<-unlist(nconv,recursive=FALSE, use.names=FALSE)
-allt<-as(unlist(list(conv,nconv), recursive=FALSE, use.names=FALSE),"transactions")
+allt<-as(unlist(list(conv2,nconv2), recursive=FALSE, use.names=FALSE),"transactions")
 allt
 testdata<- t(as(allt,'ngCMatrix'))
-ytest<-c(rep(1, length(conv)), rep(0, length(nconv)))
+testy<-c(rep(1, length(conv2)), rep(0, length(nconv2)))
+
 rm(conv)
 rm(nconv)
+rm(conv2)
+rm(nconv2)
+rm(allt)
 gc()
 lsos()
 
 
-#Filtering lines out#
-dataset<-traindata
-myrows<-which(rowSums(dataset)>2) #if record<=2 features
-y<-y[myrows]
-dataset2<-dataset[myrows,which(colSums(dataset)>50 & colSums(dataset)/nrow(dataset)<.9)]
+#Filtering training data for sparse features
+keeprows<-which(rowSums(traindata)>2) #if record<=2 features
+keepcols<-which(colSums(traindata)>50 & colSums(traindata)/nrow(traindata)<.9)
+y<-y[keeprows]
+dataset<-traindata[keeprows,keepcols]
 #traindata<-dataset2
 #testdata<-dataset2
 #####################
 
 #SUMMARY============================
 #TRAIN DATA
-table(colSums(traindata))
-dim(traindata)
-table(y)
+table(colSums(dataset))
+dim(dataset)
+table(trainy)
 #TEST DATA
 table(colSums(testdata))
 dim(testdata)
-table(ytest)
+table(testy)

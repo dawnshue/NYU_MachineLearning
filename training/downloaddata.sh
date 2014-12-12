@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd ~/TESTWORK/MLfinalproject/data/
+mkdir -p ~/MLfinalproject/data/
+cd ~/MLfinalproject/data/
 mkdir -p testdata
 mkdir -p traindata
 
