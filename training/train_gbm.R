@@ -4,7 +4,6 @@
 #install.packages("gbm")
 library(gbm)
 
-
 fit<-gbm.fit(x=traindata
              , y=y
              , distribution="bernoulli"

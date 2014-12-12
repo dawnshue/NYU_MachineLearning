@@ -52,14 +52,12 @@ pevents<-levents/(levents+lnon)
 
 
 #MERGE DATA ################################
-mdata<-1000000 #Number of rows of data to use
 #This ensures that any manipulations of data will occur for both test & train data
-allt<-as(unlist(list(conv[1:round((pevents)*mdata)]
-                     ,nconv[1:round(1-pevents*mdata)])
-                , recursive=FALSE, use.names=FALSE),"transactions")
+allt<-as(unlist(list(conv,nconv),recursive=FALSE, use.names=FALSE),"transactions")
 allt
 alldata<- t(as(allt,'ngCMatrix'))
-ally<-c(rep(1, round((pevents)*mdata)), rep(0, round((1-pevents)*mdata)))
+ally<-c(rep(1, length(conv)), rep(0, length(nconv)))
+
 
 rm(conv)
 rm(nconv)
@@ -70,29 +68,41 @@ lsos()
 
 
 #Filtering data of sparse features ################################
-y<-testy
-dataset<-testdata
+pdata<-0.1 #percent of data to actually use
+levents2<-round(pdata*levents)
+lnon2<-round(pdata*lnon)
+cevents<-c(1:levents)
+cnon<-c(levents+1:levents+lnon)
+userows<-c(sample(cevents,levents2)
+           ,sample(cnon,lnon2))
+y<-ally[userows]
+dataset<-alldata[userows]
 #keeprows<-which(rowSums(dataset)>2) #if record<=2 features
-keepcols<-which(colSums(dataset)>50)
-# & colSums(dataset)/nrow(dataset)<.9
 #y<-y[keeprows]
-#dataset<-dataset[keeprows,keepcols]
+#dataset<-dataset[keeprows,]
+keepcols<-which(colSums(dataset)>50)
+                #& colSums(dataset)/nrow(dataset)<.9
 dataset<-dataset[,keepcols]
 
-nlines<-dim(testdata)[1]
-ptest<-0.2 #Percent of data to use as test
-lconv*0.2
-lnconv*0.2
-#####################
+
+#Partition out the testdata
+ptest<-0.1 #Percent of data to use as test
+levents3<-ptest*levents2
+lnon3<-ptest*lnon2
+rtest<-c(c(1:levents3),c(levents2+1:levents2+lnon3))
+rtrain<-c(c(levents3+1:levents2),c(levents2+1+lnon3:levents2+lnon2))
+ytest<-y[rtest]
+datatest<-dataset[rtest,]
+ytrain<-y[rtrain]
+datatrain<-dataset[rtrain,]
+
 
 #SUMMARY============================
 #TRAIN DATA
 #table(colSums(traindata))
-dim(traindata)
-dim(dataset)
-table(trainy)
+dim(datatrain)
+table(ytrain)
 #TEST DATA
 #table(colSums(dataset_test))
-dim(testdata)
-dim(dataset_test)
-table(testy)
+dim(datatest)
+table(ytest)
