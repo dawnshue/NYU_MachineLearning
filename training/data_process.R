@@ -82,10 +82,11 @@ lsos()
 
 
 #Filtering data of sparse features ################################
-keeprows<-c(1:length(trainy))
+y<-trainy
+dataset<-traindata
 keeprows<-which(rowSums(traindata)>2) #if record<=2 features
 keepcols<-which(colSums(traindata)>50 & colSums(traindata)/nrow(traindata)<.9)
-y<-y[keeprows]
+y<-trainy[keeprows]
 dataset<-traindata[keeprows,keepcols]
 dataset_test<-testdata[,keepcols]
 #traindata<-dataset2
