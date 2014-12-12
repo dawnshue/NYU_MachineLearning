@@ -4,21 +4,30 @@
 #install.packages("gbm")
 library(gbm)
 
-fit<-gbm.fit(x=traindata
-             , y=y
-             , distribution="bernoulli"
-             , n.trees = 1000
-             , shrinkage = 0.1
-             , interaction.depth = 3
-             , n.minobsinnode = 10
-             , nTrain = round(dim(traindata)[1] * 0.8)
-             , verbose = TRUE #prints preliminary output
-             )
+system.time(fit<-gbm.fit(x=datatrain
+                         , y=ytrain
+                         , distribution="bernoulli"
+                         , verbose = TRUE #prints preliminary output
+))
+
+system.time(fit<-gbm.fit(x=datatrain
+                         , y=ytrain
+                         , distribution="bernoulli"
+                         , n.trees = 100
+                         , shrinkage = 1
+                         , interaction.depth = 1
+                         , n.minobsinnode = 10
+                         , keep.data = FALSE
+                         #, nTrain = round(dim(datatrain)[1] * 0.8) #data used for training
+                         , verbose = FALSE #prints preliminary output
+))
 
 summary(fit)
-newtrees<-gbm.perf(fit) #optimal number of trees based on cv
 
-pred<-predict.gbm(object=fit
-        , newdata=testdata
-        , n.trees=newtrees
-        , type="response")
+#Obtains optimal number of trees based on cv
+system.time(newtrees<-gbm.perf(fit))
+
+system.time(pred<-predict.gbm(object=fit
+                              , newdata=testdata
+                              , n.trees=newtrees
+                              , type="response"))

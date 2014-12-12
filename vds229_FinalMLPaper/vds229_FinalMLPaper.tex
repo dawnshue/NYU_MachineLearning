@@ -36,6 +36,7 @@ Background on Cafemom and the specific problem: classify hispanic users
 (7) Use prediction rate as a measure of goodness of fit
 
 \section*{Methods}
+\subsection*{Data Collection}
 Demdex has Traits\/Segments, uuid and traits\/segments collected
 Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 0 for en
 \begin{itemize}
@@ -44,6 +45,11 @@ Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 
   \item segment\_hispanic2: 9733751 total uuids
   \item segment\_hispanic2: 1868091 hispanic (19 percent)
 \end{itemize}
+\subsection*{Data Processing}
+alldata: 7193606 x 2105480
+dataset: 1438721 x 44336
+traindata: 1294849 x 44336
+testdata: 143872 x 44336
 
 \subsection*{Logistic Regression}
 We used \texttt{glmnet} to generate logistic regression model.
@@ -51,7 +57,7 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 (3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
 
 \subsection*{Generalized Boosted Regression Model}
-(7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. 
+(7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
 \subsection*{Random Forest or Ferns}
 
 \subsection*{Support Vector Machines}
@@ -76,6 +82,8 @@ We demonstrated the application of Machine Learning in Advertising Technology, i
 
 Cannot accept comparisons without consideration to the implementation. Some may provide more "tuning" than other algorithms and therefore appear more accurate. However, we demonstrate which algorithm will work best for our usage.
 
+(8) need to look into using spark with R for much larger data computation.
+
 \section*{Acknowledgements}
 Patrick McCann \& Cafemom, Professor Mohri
 
@@ -96,6 +104,7 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item http://www.statmethods.net/advstats/cart.html (rpart and random forest)
   \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
   \item 7 http://vimeo.com/71992876 (gbm)
+  \item 8 http://datasaucer.blogspot.com/ (R for big data)
 \end{itemize}
 
 

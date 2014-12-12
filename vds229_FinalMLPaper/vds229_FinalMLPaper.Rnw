@@ -45,8 +45,11 @@ Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 
   \item segment\_hispanic2: 1868091 hispanic (19 percent)
 \end{itemize}
 \subsection*{Data Processing}
-traindata: 6296068 x 1988402
-testdata: 5178358 x 1913063
+alldata: 7193606 x 2105480
+dataset: 1438721 x 44336
+traindata: 1294849 x 44336
+testdata: 143872 x 44336
+
 \subsection*{Logistic Regression}
 We used \texttt{glmnet} to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
@@ -54,6 +57,7 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 
 \subsection*{Generalized Boosted Regression Model}
 (7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
+(8) General gbm parameter info
 \subsection*{Random Forest or Ferns}
 
 \subsection*{Support Vector Machines}
@@ -99,6 +103,9 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
   \item 7 http://vimeo.com/71992876 (gbm)
   \item 8 http://datasaucer.blogspot.com/ (R for big data)
+  \item 9 http://www.inside-r.org/packages/cran/gbm/docs/gbm
+  \item 10 http://jwijffels.github.io/RMOA/doc/pdf/Manual.pdf (MOA manual)
+  \item 11 https://github.com/jwijffels/RMOA (streaming RMOA)
 \end{itemize}
 
 

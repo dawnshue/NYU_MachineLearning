@@ -19,5 +19,5 @@ s3cmd get -r s3://cmcdf/hive_tables/segment/hispanic/sample/
 
 #Copy features of each class to separate files
 cd ..
-cat traindata/* | grep -P '1\t' | awk '{print $2}' > events.txt
-cat traindata/* | grep -P '0\t' | awk '{print $2}' | pigz -c > nonevents.txt.gz
+cat weighted_data/* | grep -P '1\t' | awk '{print $2}' > weighted_events.txt
+cat weighted_data/* | grep -P '0\t' | awk '{print $2}' | pigz -c > weighted_nonevents.txt.gz
