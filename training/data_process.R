@@ -37,6 +37,8 @@ ytest<-ytrain
 
 
 setwd('~/MLfinalproject/data/')
+
+
 #LOAD DATA ################################
 #Unlist the features in class=1
 inlist<-'~/MLfinalproject/data/weighted_events.txt'
@@ -73,8 +75,14 @@ system(paste0('s3cmd put '
               , ' s3://cmcdf/hive_tables/segment/hispanic/'))
 
 
+#If data exists use:
+setwd('~/MLfinalproject/data/')
+load('weighted.RData')
+ls()
+pevents<-levents/(levents+lnon)
+
 #Filtering data of sparse features ################################
-pdata<-0.01 #percent of data to actually use
+pdata<-0.02 #percent of data to actually use
 levents2<-round(pdata*levents)
 lnon2<-round(pdata*lnon)
 cevents<-seq(1,levents,1)
@@ -127,13 +135,48 @@ table(ytest)
 sort(sapply(ls(),function(x) object.size(get(x))),T)[1:10]/1e6
 gc()
 
+#========SPARSE TO MATRIX
+#dim(datatrain)
+#142433  10128
+#dim(datatest)
+# 1439 10128
+# Because some methods do not accept sparse matrix
 datatrain2<-t(as(as(datatrain,"transactions"),"matrix"))
 datatrain<-datatrain2
 rm(datatrain2)
+
 datatest2<-t(as(as(datatest,"transactions"),"matrix"))
 datatest<-datatest2
 rm(datatest2)
 
-smalltest<-sample(c(1:dim(datatest)[1]),300)
-ytest[smalltest]
-#smalltest: 300
+save.image(file='weighted_small.RData')
+
+
+setwd('~/MLfinalproject/data/')
+load('weighted_small.RData')
+ls()
+
+#TRAIN DATA
+m<-70000
+a<-round(m*pevents) #events that are 1
+b<-m-a #nonevents
+train1<-c(sample(seq(1,(levents2 - levents3),1),a),
+          sample(seq((levents2 - levents3 + 1),length(ytrain),1),b))
+m<-35000
+a<-round(m*pevents) #events that are 1
+b<-m-a #nonevents
+train0<-c(sample(seq(1,(levents2 - levents3),1),a),
+          sample(seq((levents2 - levents3 + 1),length(ytrain),1),b))
+
+#TEST DATA
+small100<-sample(c(1:dim(datatest)[1]),100)
+small250<-sample(c(1:dim(datatest)[1]),250)
+small500<-sample(c(1:dim(datatest)[1]),500)
+small2<-sample(c(1:dim(datatest)[1]),500)
+small3<-sample(c(1:dim(datatest)[1]),500)
+small4<-sample(c(1:dim(datatest)[1]),500)
+small5<-sample(c(1:dim(datatest)[1]),500)
+small1000<-sample(c(1:dim(datatest)[1]),1000)
+
+save.image(file='weighted_smallsub.RData')
+
