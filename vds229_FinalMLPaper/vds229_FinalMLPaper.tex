@@ -3,7 +3,7 @@
 \usepackage{geometry}
 \geometry{legalpaper, portrait, margin=1in}
 
-\title{Machine Learning in Advertising Technology}
+\title{Applying Machine Learning in Advertising Technology}
 \author{Vangie Shue}
 
 \usepackage{Sweave}
@@ -12,11 +12,12 @@
 
 \maketitle
 \section*{Abstract}
-This project will explore the application of Machine Learning in Technology. Specifically, we will seek to develop a reliable process for developing a classification algorithm on given data.
+This project investigates the application of machine learning in advertising technology, a rapidly growing field. In order to utilize machine learning in advertising technology however, a balance must be found between accuracy and efficiency. As such, this project will provide a preliminary comparison of several algorithms on the basis of how long they take to fit a large amount of data and how accurate their resulting model is. The algorithms will be used to tackle a binary classification problem, specifically: determining hispanic users from the audience in order to target them for advertising campaigns? =====RESULTS===== In our evaluation of Naive Bayes, Generalized Boosting, Logistic Regression, and Random forest models, we found ...
 
 \begin{multicols}{2}
 
 \section*{Introduction}
+Advertising Technology
 Background on Advertising Technology use cases.
 Background on Cafemom and the specific problem: classify hispanic users
 
@@ -58,6 +59,7 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 
 \subsection*{Generalized Boosted Regression Model}
 (7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
+(8) General gbm parameter info
 \subsection*{Random Forest or Ferns}
 
 \subsection*{Support Vector Machines}
@@ -78,14 +80,14 @@ Something like a plot centered.
 \end{center}
 
 \section*{Conclusion}
-We demonstrated the application of Machine Learning in Advertising Technology, in particular for rare events.
+We have demonstrated the application of machine learning in advertising technology, in particular for a problem with rare events. 
 
 Cannot accept comparisons without consideration to the implementation. Some may provide more "tuning" than other algorithms and therefore appear more accurate. However, we demonstrate which algorithm will work best for our usage.
 
-(8) need to look into using spark with R for much larger data computation.
+While the results are encouraging, further exploration of machine learning tools is needed especially for processing large amounts of data with a similarly immense feature space. For example, investigation into SparkR would allow for integration of R's diverse offering of machine learning tools and the parallel processing power of Spark (8). However, these technologies are still very new and undergoing significant amounts of development. Likewise, they will also be limited in available documentation and resources. Nonetheless, moving forward we expect to see much advancement in machine learning tools to solve problems in advertising technology.
 
 \section*{Acknowledgements}
-Patrick McCann \& Cafemom, Professor Mohri
+I would like to thank Patrick McCann at Cafemom for providing guidance as well as allowing the use of Cafemom's advertising data to perform this research. In addition, Professor Mohri has imparted much knowledge on machine learning algorithms in his class, Foundations of Machine Learning (CSCI-GA. 2566-001).
 
 \end{multicols}
 
@@ -105,6 +107,9 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 6 http://www.inside-r.org/packages/cran/glmnet/docs/glmnet
   \item 7 http://vimeo.com/71992876 (gbm)
   \item 8 http://datasaucer.blogspot.com/ (R for big data)
+  \item 9 http://www.inside-r.org/packages/cran/gbm/docs/gbm
+  \item 10 http://jwijffels.github.io/RMOA/doc/pdf/Manual.pdf (MOA manual)
+  \item 11 https://github.com/jwijffels/RMOA (streaming RMOA)
 \end{itemize}
 
 
