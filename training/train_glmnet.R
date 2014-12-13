@@ -11,38 +11,90 @@ library(glmnet)
 fitglm<-list()
 system.time(fitglm[[1]]<-glmnet(x=datatrain[train0,], y=ytrain[train0]))
 #   user  system elapsed 
-#
+#293.033   1.298 294.006
 system.time(fitglm[[2]]<-glmnet(x=datatrain[train1,], y=ytrain[train1]))
 #user  system elapsed 
-#
+#469.368   1.505 470.336
 system.time(fitglm[[3]]<-glmnet(x=datatrain, y=ytrain))
 #user  system elapsed 
-#
+#808.587   2.070 809.759
+save.image("weighted_glm.RData")
 
 ##### PERFORM PREDICT
 predglm<-list()
 for(x in c(1:8)) {
-  print(paste0('predsvm[[',x,']]<-predict(object=fitglm[[3]]
-                                    , newdata=datatest[small[[',x']],]
-                                    , type="class"
-                                    , threshold=0.05
-  )'
+  cat(paste0('system.time(predglm[['
+             ,x
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
+  ))
+  flush.console()
+}
+for(x in seq(4,8,1)) {
+  cat(paste0('system.time(predglm[['
+             ,x+5
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
+  ))
+  flush.console()
+}
+for(x in seq(4,8,1)) {
+  cat(paste0('system.time(predglm[['
+             ,x+10
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
   ))
   flush.console()
 }
 
-pcnt<-9
-for(x in seq(4,8,1)) {
-  for(f in c(1:2)) {
-    system.time(predsvm[[pcnt]]<-predict(object=fitglm[[f]]
-                                         , newx=datatest[small[[x]],]
-                                         , type="response", s=0.05
-    ))
-    pcnt<-pcnt+1
-    flush.console()
-  }
-}
+############
+system.time(predglm[[1]]<-predict(object=fitglm[[3]], newx=datatest[small[[1]],], type="response", s=0.05))
+0.034   0.000   0.034 
+system.time(predglm[[2]]<-predict(object=fitglm[[3]], newx=datatest[small[[2]],], type="response", s=0.05))
+0.076   0.000   0.076
+system.time(predglm[[3]]<-predict(object=fitglm[[3]], newx=datatest[small[[3]],], type="response", s=0.05))
+0.274   0.028   0.301
+system.time(predglm[[4]]<-predict(object=fitglm[[3]], newx=datatest[small[[4]],], type="response", s=0.05))
+0.161   0.012   0.173
+system.time(predglm[[5]]<-predict(object=fitglm[[3]], newx=datatest[small[[5]],], type="response", s=0.05))
+0.201   0.016   0.217
+system.time(predglm[[6]]<-predict(object=fitglm[[3]], newx=datatest[small[[6]],], type="response", s=0.05))
+0.198   0.016   0.213
+system.time(predglm[[7]]<-predict(object=fitglm[[3]], newx=datatest[small[[7]],], type="response", s=0.05))
+0.157   0.032   0.189
+system.time(predglm[[8]]<-predict(object=fitglm[[3]], newx=datatest[small[[8]],], type="response", s=0.05))
+0.166   0.028   0.194
+system.time(predglm[[9]]<-predict(object=fitglm[[2]], newx=datatest[small[[4]],], type="response", s=0.05))
+0.159   0.028   0.188
+system.time(predglm[[10]]<-predict(object=fitglm[[2]], newx=datatest[small[[5]],], type="response", s=0.05))
+0.153   0.016   0.170
+system.time(predglm[[11]]<-predict(object=fitglm[[2]], newx=datatest[small[[6]],], type="response", s=0.05))
+0.161   0.012   0.173
+system.time(predglm[[12]]<-predict(object=fitglm[[2]], newx=datatest[small[[7]],], type="response", s=0.05))
+0.154   0.016   0.170
+system.time(predglm[[13]]<-predict(object=fitglm[[2]], newx=datatest[small[[8]],], type="response", s=0.05))
+0.166   0.008   0.175
+system.time(predglm[[14]]<-predict(object=fitglm[[1]], newx=datatest[small[[4]],], type="response", s=0.05))
+0.157   0.016   0.173
+system.time(predglm[[15]]<-predict(object=fitglm[[1]], newx=datatest[small[[5]],], type="response", s=0.05))
+0.158   0.012   0.170
+system.time(predglm[[16]]<-predict(object=fitglm[[1]], newx=datatest[small[[6]],], type="response", s=0.05))
+0.157   0.012   0.169
+system.time(predglm[[17]]<-predict(object=fitglm[[1]], newx=datatest[small[[7]],], type="response", s=0.05))
+0.161   0.012   0.173
+system.time(predglm[[18]]<-predict(object=fitglm[[1]], newx=datatest[small[[8]],], type="response", s=0.05))
+0.197   0.020   0.217
 
+rm(fitglm, x, datatrain, datatest)
+save.image("weighted_glm.RData")
+
+########################
 
 
 

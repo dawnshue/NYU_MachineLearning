@@ -27,17 +27,26 @@ system.time(fitsvm[[2]]<-svm(x=datatrain[train1,], y=as.factor(ytrain[train1])))
 system.time(fitsvm[[3]]<-svm(x=datatrain, y=as.factor(ytrain)))
 #user  system elapsed 
 #
+save.image("weighted_svm.RData")
 
 ##### PERFORM PREDICT
 predsvm<-list()
 for(x in c(1:8)) {
-  system.time(predsvm[[x]]<-predict(object=fitsvm[[3]]
-                                   , newdata=datatest[small[[x]],]
-                                   , type="class"
-                                   , threshold=0.05
+  cat(paste0('system.time(predsvm[['
+             ,x
+             ,']]<-predict(object=fitsvm[[3]], newdata=datatest[small[['
+             ,x
+             ,']],], type="class"))'
   ))
   flush.console()
 }
+for(x in c(1:8)) {
+  system.time(predsvm[[x]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[x]],], type="class", threshold=0.05))
+  flush.console()
+}
+
+
+
 
 pcnt<-9
 for(x in seq(4,8,1)) {
