@@ -20,14 +20,30 @@ system.time(fit<-naiveBayes(x=datatrain
                          , y=as.factor(ytrain)
                          #, laplace = 0 #0 disables laplace smoothing
 ))
+#p = 0.01
+#user     system  elapsed
+#76.556   2.358  78.782
 
 summary(fit)
 
+smalltest<-sample(c(1:dim(datatest)[1]),300)
+ytest[smalltest]
 system.time(pred<-predict(object=fit
-                              , newdata=datatest
+                              , newdata=datatest[smalltest]
                               , type="class"
                           ))
+#test = 300
+#user  system elapsed 
+#68.671   0.554  68.557
 
-table(pred, ytest, dnn=list('predicted','actual'))
-accuracy<-1-(sum(abs(as.numeric(as.character(ytest)) - 
-                       as.numeric(as.character(pred))))/length(ytest))
+table(pred, ytest[smalltest], dnn=list('predicted','actual'))
+actual
+#test = 300
+#         actual
+#predicted   0   1
+#         0 236  54
+#         1   1   9
+
+accuracy<-1-(sum(abs(as.numeric(as.character(ytest[smalltest])) - 
+                       as.numeric(as.character(pred))))/length(ytest[smalltest]))
+#test = 300, accuracy = 0.8166667

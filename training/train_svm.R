@@ -32,9 +32,14 @@ system.time(fit<-svm(x=datatrain
          , fitted = TRUE
          , seed = 1L
          ))
+#Defaults
+#
+
 
 system.time(pred<-predict(fit
               , x=datatest))
+
+
 
 table(pred, ytest, dnn=list('predicted','actual'))
 accuracy<-1-(sum(abs(as.numeric(as.character(ytest)) - 

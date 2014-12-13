@@ -74,7 +74,7 @@ system(paste0('s3cmd put '
 
 
 #Filtering data of sparse features ################################
-pdata<-0.1 #percent of data to actually use
+pdata<-0.01 #percent of data to actually use
 levents2<-round(pdata*levents)
 lnon2<-round(pdata*lnon)
 cevents<-seq(1,levents,1)
@@ -95,7 +95,7 @@ dataset<-dataset[,keepcols]
 rm(keepcols)
 
 #Partition out the testdata
-ptest<-0.1 #Percent of data to use as test
+ptest<-0.01 #Percent of data to use as test
 levents3<-round(ptest*levents2)
 lnon3<-round(ptest*lnon2)
 rtest<-c(seq(1,levents3,1)
@@ -126,3 +126,10 @@ table(ytest)
 # More Clean Up
 sort(sapply(ls(),function(x) object.size(get(x))),T)[1:10]/1e6
 gc()
+
+datatrain2<-t(as(as(datatrain,"transactions"),"matrix"))
+datatrain<-datatrain2
+rm(datatrain2)
+datatest2<-t(as(as(datatest,"transactions"),"matrix"))
+datatest<-datatest2
+rm(datatest2)
