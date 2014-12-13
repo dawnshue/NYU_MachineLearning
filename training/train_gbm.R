@@ -1,8 +1,59 @@
 #TRAINING USING GBM::Gradient Boosted Model"
-#Video tutorial: http://vimeo.com/71992876
+setwd('~/MLfinalproject/data/')
+load('weighted_smallsub.RData')
+ls()
 
 #install.packages("gbm")
 library(gbm)
+
+#Video tutorial: http://vimeo.com/71992876
+#GENERATING MODEL
+fitgbm<-list()
+system.time(fitgbm[[1]]<-gbm.fit(x=datatrain[train0,], y=ytrain[train0], distribution="bernoulli", verbose = FALSE))
+#
+save.image("weighted_gbm.RData")
+system.time(fitgbm[[2]]<-gbm.fit(x=datatrain[train1,], y=ytrain[train1], distribution="bernoulli", verbose = FALSE))
+#
+save.image("weighted_gbm.RData")
+system.time(fitgbm[[3]]<-gbm.fit(x=datatrain, y=ytrain, distribution="bernoulli", verbose = FALSE))
+#
+save.image("weighted_gbm.RData")
+
+##### PERFORM PREDICT
+predglm<-list()
+for(x in c(1:8)) {
+  cat(paste0('system.time(predglm[['
+             ,x
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
+  ))
+  flush.console()
+}
+for(x in seq(4,8,1)) {
+  cat(paste0('system.time(predglm[['
+             ,x+5
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
+  ))
+  flush.console()
+}
+for(x in seq(4,8,1)) {
+  cat(paste0('system.time(predglm[['
+             ,x+10
+             ,']]<-predict(object=fitglm[[3]], newx=datatest[small[['
+             ,x
+             ,']],], type="response", s=0.05))'
+             ,'\n'
+  ))
+  flush.console()
+}
+
+
+
 
 system.time(fit<-gbm.fit(x=datatrain
                          , y=ytrain

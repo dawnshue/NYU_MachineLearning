@@ -77,15 +77,21 @@ system.time(prednb[[13]]<-predict(object=fitnb[[2]], newdata=datatest[small[[8]]
 #163.231   1.615 163.257
 
 system.time(prednb[[14]]<-predict(object=fitnb[[1]], newdata=datatest[small[[4]],], type="class", threshold=0.05))
-#
+#164.975   1.637 165.013
 system.time(prednb[[15]]<-predict(object=fitnb[[1]], newdata=datatest[small[[5]],], type="class", threshold=0.05))
-#
+#164.854   1.755 165.011
 system.time(prednb[[16]]<-predict(object=fitnb[[1]], newdata=datatest[small[[6]],], type="class", threshold=0.05))
-#
+#166.835   1.813 167.056
 system.time(prednb[[17]]<-predict(object=fitnb[[1]], newdata=datatest[small[[7]],], type="class", threshold=0.05))
-#
+#165.561   1.881 165.864
 system.time(prednb[[18]]<-predict(object=fitnb[[1]], newdata=datatest[small[[8]],], type="class", threshold=0.05))
-#
+#165.310   1.431 165.159
+
+rm(datatest, datatrain, fitnb, x)
+save.image("weighted_nb.RData")
+
+#########################
+
 
 
 
