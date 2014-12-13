@@ -1,9 +1,52 @@
 #TRAINING USING GLMNET::BINOMIAL LOGISTIC REGRESSION"
+setwd('~/MLfinalproject/data/')
+load('weighted_smallsub.RData')
+ls()
+
 #install.packages("glmnet")
 library(glmnet)
 
 
 #GENERATING MODEL
+fitglm<-list()
+system.time(fitglm[[1]]<-glmnet(x=datatrain[train0,], y=ytrain[train0]))
+#   user  system elapsed 
+#
+system.time(fitglm[[2]]<-glmnet(x=datatrain[train1,], y=ytrain[train1]))
+#user  system elapsed 
+#
+system.time(fitglm[[3]]<-glmnet(x=datatrain, y=ytrain))
+#user  system elapsed 
+#
+
+##### PERFORM PREDICT
+predglm<-list()
+for(x in c(1:8)) {
+  print(paste0('predsvm[[',x,']]<-predict(object=fitglm[[3]]
+                                    , newdata=datatest[small[[',x']],]
+                                    , type="class"
+                                    , threshold=0.05
+  )'
+  ))
+  flush.console()
+}
+
+pcnt<-9
+for(x in seq(4,8,1)) {
+  for(f in c(1:2)) {
+    system.time(predsvm[[pcnt]]<-predict(object=fitglm[[f]]
+                                         , newx=datatest[small[[x]],]
+                                         , type="response", s=0.05
+    ))
+    pcnt<-pcnt+1
+    flush.console()
+  }
+}
+
+
+
+
+
 #Fit 1: using defaults: lasso penalty, nlambda=100
 system.time(fit1<-glmnet(x=datatrain, y=ytrain, family="binomial"))
 #Datatrain:

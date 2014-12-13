@@ -178,5 +178,15 @@ small4<-sample(c(1:dim(datatest)[1]),500)
 small5<-sample(c(1:dim(datatest)[1]),500)
 small1000<-sample(c(1:dim(datatest)[1]),1000)
 
+small<-list()
+small[[1]]<-small100
+small[[2]]<-small250
+small[[3]]<-small1000
+small[[4]]<-small500
+small[[5]]<-small2
+small[[6]]<-small3
+small[[7]]<-small4
+small[[8]]<-small5
+
 save.image(file='weighted_smallsub.RData')
 
