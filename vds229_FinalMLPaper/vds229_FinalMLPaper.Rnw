@@ -49,19 +49,36 @@ Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 
 alldata: 7193606 x 2105480
 dataset: 1438721 x 44336
 traindata: 1294849 x 44336
+pdata: 0.01, ptest: 0.01
+datatrain: 64743 x 6223
+pdata: 0.05, ptest: 0.01
+traindata2:
+pdata: 0.005, ptest: 0.01
+traindata0:
 testdata: 143872 x 44336
+smalltest: 300
+small500: 500
+small1000: 1000
+
+Fit - 3 data points: traindata0, traindata, traindata2
+  1 graph: time, no error bars
+Predict - 5*3 data points: smalltest, small500, small1000
+Tuning: if you have time
 
 \subsection*{Logistic Regression}
-We used \texttt{glmnet} to generate logistic regression model.
+We used \texttt{glmnet} (Generalized Linear Models) to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
 (3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
 
-\subsection*{Generalized Boosted Regression Model}
+\subsection*{Gradient Boosted Regression Model}
 (7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
 (8) General gbm parameter info
-\subsection*{Random Forest or Ferns}
 
 \subsection*{Support Vector Machines}
+
+\subsection*{Naive Bayes}
+
+\subsection*{Random Forest or Ferns}
 
 <<>>=
 data(example)
@@ -70,6 +87,8 @@ The above is a snippet of code used.
 
 \section*{Results}
 Compare time for execution \& accuracy between models\/methods. ex.Unweighted\/Non-filtered\/Logistic Regression
+
+
 
 The below is a sample graph of data.
 \begin{center}

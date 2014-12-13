@@ -33,14 +33,18 @@ system.time(fit<-svm(x=datatrain
          , seed = 1L
          ))
 #Defaults
-#
+#    user   system  elapsed 
+#1323.354    5.066 1327.324 
 
 
 system.time(pred<-predict(fit
-              , x=datatest))
-
-
-
+                          , newdata=datatest))
 table(pred, ytest, dnn=list('predicted','actual'))
-accuracy<-1-(sum(abs(as.numeric(as.character(ytest)) - 
-                       as.numeric(as.character(pred))))/length(ytest))
+#smalltest=300, actual
+#predicted   0   1
+#        0 232  28
+#        1   5  35
+
+accuracy<-1-(sum(abs(as.numeric(as.character(ytest[smalltest])) - 
+                       as.numeric(as.character(pred))))/length(ytest[smalltest]))
+#300: accuracy: 0.89

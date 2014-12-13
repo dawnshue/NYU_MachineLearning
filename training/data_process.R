@@ -133,3 +133,7 @@ rm(datatrain2)
 datatest2<-t(as(as(datatest,"transactions"),"matrix"))
 datatest<-datatest2
 rm(datatest2)
+
+smalltest<-sample(c(1:dim(datatest)[1]),300)
+ytest[smalltest]
+#smalltest: 300

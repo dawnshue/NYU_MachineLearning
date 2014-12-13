@@ -26,8 +26,6 @@ system.time(fit<-naiveBayes(x=datatrain
 
 summary(fit)
 
-smalltest<-sample(c(1:dim(datatest)[1]),300)
-ytest[smalltest]
 system.time(pred<-predict(object=fit
                               , newdata=datatest[smalltest]
                               , type="class"
