@@ -169,7 +169,7 @@ The below plot depicts how the modelling time increased almost linear with restp
 
 Figure 1. Fitting time for Naive Bayes
 \end{center}
-
+The below, Figure 2, shows that 
 \begin{Schunk}
 \begin{Sinput}
 > ptimes<-c(33.053, 82.095, 168.915, 335.145)
@@ -185,6 +185,20 @@ Figure 1. Fitting time for Naive Bayes
 Figure 2. Predicting time for Naive Bayes
 \end{center}
 
+\begin{Schunk}
+\begin{Sinput}
+> m<-c(35000, 70000, 142433)
+> nb_acc<-c(0.7992, 0.8036, 0.8148)
+> plot(x=m,y=nb_acc,type="l"
++      ,xlab="# training examples"
++      ,ylab="Accuracy (%)")
+\end{Sinput}
+\end{Schunk}
+\begin{center}
+=====[[NB3\_TIME]]=====
+
+Figure 1. Accuracy of Naive Bayes
+\end{center}
 
 
 \section*{Conclusion}

@@ -151,26 +151,30 @@ The above is a snippet of code used.
 \subsection*{RARE EVENTS=====}
 
 \subsection*{Naive Bayes}
-The below plot depicts how the modelling time increased almost linear with restpect to the size of the training data. This is expected since Naive Bayes does not consider feature interactions, so it can fit the classifier in \texttt{O(m*n)} time, where \texttt{m} is the number of training examples and \texttt{n} is the number of features (17).
+Figure 1 depicts how the modelling time increased almost linear with restpect to the size of the training data. This is expected since Naive Bayes does not consider feature interactions, so it can fit the classifier in \texttt{O(m*n)} time, where \texttt{m} is the number of training examples and \texttt{n} is the number of features (17).
 <<nb1,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
 ftimes<-c(82.248, 167.030, 294.883)
 plot(x=m,y=ftimes/60,type="l"
      ,xlab="# training examples"
      ,ylab="time (min)")
+cor(m, ftimes) #0.9966318
+lm(ftimes ~ m) #m: 0.001947
 @
 \begin{center}
 =====[[NB1\_TIME]]=====
 
 Figure 1. Fitting time for Naive Bayes
 \end{center}
-The below, Figure 2, shows that 
+The below, Figure 2, also shows a fairly linear relationship between the predicting time and the size of the test sample.
 <<nb2,fig=FALSE,height=2,width=3>>=
 ptimes<-c(33.053, 82.095, 168.915, 335.145)
 sample<-c(100,250,500,1000)
 plot(x=sample,y=ptimes/60,type="l"
      ,xlab="# test cases"
      ,ylab="time (min)")
+cor(sample, ptimes) #0.9999622
+lm(ptimes ~ sample) #0.3364
 @
 \begin{center}
 =====[[NB2\_TIME]]=====
