@@ -1,4 +1,5 @@
 #TRAINING USING GLMNET::BINOMIAL LOGISTIC REGRESSION"
+rm(list=ls()) #clears workspace
 setwd('~/MLfinalproject/data/')
 load('weighted_smallsub.RData')
 ls()

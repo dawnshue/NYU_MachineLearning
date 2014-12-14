@@ -1,4 +1,5 @@
 #TRAINING USING Bernoulli Naive Bayes"
+rm(list=ls()) #clears workspace
 setwd('~/MLfinalproject/data/')
 load('weighted_smallsub.RData')
 ls()
