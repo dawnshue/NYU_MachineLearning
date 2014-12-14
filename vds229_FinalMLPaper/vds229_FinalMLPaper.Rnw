@@ -8,67 +8,113 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+\SweaveOpts{strip.white=FALSE}
 
 \maketitle
 \section*{Abstract}
-This project investigates the application of machine learning in advertising technology, a rapidly growing field. In order to utilize machine learning in advertising technology however, a balance must be found between accuracy and efficiency. As such, this project will provide a preliminary comparison of several algorithms on the basis of how long they take to fit a large amount of data and how accurate their resulting model is. The algorithms will be used to tackle a binary classification problem, specifically: determining hispanic users from the audience in order to target them for advertising campaigns? =====RESULTS===== In our evaluation of Naive Bayes, Generalized Boosting, Logistic Regression, and Random forest models, we found ...
+This project investigates the application of machine learning in advertising technology, a rapidly growing field. In order to utilize machine learning in advertising technology however, a balance must be found between accuracy and efficiency. As such, this project will provide a preliminary comparison of several algorithms on the basis of how long they take to fit a large amount of data and how accurate their resulting model is. The algorithms will be used to tackle a binary classification problem, specifically: determining hispanic users from the audience in order to target them for advertising campaigns? For our study, we chose to test Naive Bayes, Gradient Boosting, Logistic Regression, and Support Vector Machines--all of which have an associated library available in R. In our evaluation of the algorithms, we found =====RESULTS=====
+
+
+\emph{\textbf{Keyworks--analytics, online advertising, classification, machine learning}}
 
 \begin{multicols}{2}
 
 \section*{Introduction}
-Advertising Technology
-Background on Advertising Technology use cases.
-Background on Cafemom and the specific problem: classify hispanic users
+
+Online advertising has undergone sweeping development thanks to fairly recent but rapid innovation and advancement of tools allowing advertisers to automate the management, evaluation, and analysis of their display advertising campaigns. Services like Nielsen Online Campaign Ratings for example, provide demand-side clients, the advertisers, with the ability to determine whether their ads are reaching particular user populations that are more likely to be interested in their products. On the supply-side, companies like Mediamath offer management applications that allow the publishers more control over how their ads are distributed such as by setting daily impression caps and black- or white-listing particular websites. With these improvements to help streamline campaign management, advertisers can now focus on solving more abstract questions and develop more fine-tuned targeting strategies, thus improving the return on their investments (12).
+
+
+There is a great opportunity to utilize machine learning in identifying pertinent users so that more relevant ads can be targeted to them. Publishers can track how their users typically navigate their sites through tracking pixels and cookies (3). With services like Demdex, a data management platform, they can create traits to define their users. Multiple traits can be further clustered into segments. When publishers receive their impression reports, they are able to see which traits/segments a particular cookie (or "user") satisfies. In machine learning, traits and segments would be analogous to features, while each cookie can act as a data point. As such, a medium-sized company, with nearly four million cookies accessing their sites per day, quickly aggregates a tremendous amount of data.
+
+
+CafeMom is an online community for moms to come together to exchange advice and support on topics like pregnancy, health, etc. One of their flagship services is MamasLatinas, a site geared towards providing a more relevant community for Hispanic moms. Many advertisers commission CafeMom to help bring their products to Hispanic moms, leading CafeMom to need to develop a reliable model to identify Hispanic women so that they can target these users in both on- and off-site advertisements. But even a simple problem like binary classification can be modeled in many ways in machine learning. This project therefore seeks to provide a preliminary evaluation of the typical learning algorithms that could solve this problem: Naive Bayes, Gradient Boosting, Logistic Regression, Support Vector Machines, and Random Forest. Advertising data is big in scale not only because there are so many online users, but also because it contains a tremendous number of features. As such, the study will need to compare these algorithms both in terms of how quickly they can model the data and how accurately their model predicts on test data.
+
 
 \subsection*{Classifying Rare Events}
-(1, pg141) Rare events are more statistically informative that zeros is seen in the variance matrix
-(1, p142) When sampling, we must be careful not to select on X differently for the two samples.
-(2) The problem is that maximum likelihood estimation of the logistic method is well-known to suffer from small-sample bias. The penalized likelihood or Firth method are the general approach to reducing small-sample bias.
+While CafeMom may be able to obtain a significant amount of information on Hispanic users through MamasLatinas, they are interested in seeing how these users navigate on other sites in order for them to be able to identify Hispanic moms on affiliated sites. In addition, when sampling, we must be careful not to select on X differently for the two samples (1). Therefore, our project only guarantees a Hispanic user based on their User Agent language. The complement is only considered to be users who use English for their User Agent. As such, in the grand schemes of all their users, Hispanic moms actually constitute only around 2\% of their known population of data. Identifying a Hispanic mom is therefore actually a fairly rare event.
+
+
+According to King and Zeng, rare events tend to be difficult to explain and predict (1). Either logistic regression algorithms will sharply underestimate these events or data collection strategies are grossly inefficient (1). In addition, the authors identified that rare events are actually more statistically informative than "zeros" (1). King and Zeng determined that they could achieve better results by sampling all available events and only a tiny fraction of non-events. This method would also have the added benefit of being more efficient since you would not have to model over [as] tremendous amounts of data in order to get a sufficient number of events while maintaining the event probability.
+
+
+On the other hand, Paul Allison responded with some critique to the study (2). He believed that the problem was not actually the "rarity" of the events but the actual \emph{number} of events was too small, and therefore led to small-sample bias in logistic models. By example, Allison believed that as long as the sample of rare events was large enough (ex. 2000 events), you could still model on the original sample size (ex. 100,000 cases). In addition, Paul Allison suggested the use of penalized likelihood, or the Firth method, to model data with rare events (2). However, since modeling with enough data to reduce the small-sample bias would drastically increase the execution time, this project will utilize the method offered by King and Zeng. However, we will do a brief comparison of the weighted event method with a non-weighted sample to provide a glimpse as to whether the results would be significantly different.
+
 
 \subsection*{Classification Algorithms}
+In an attempt to cover the breadth of learning algorithms for binary classification, we have chosen to evaluate the following algorithms: Naive Bayes, Support Vector Machine, Gradient Boosted Model, and Logistic Regression. All have implementations available in R, which was therefore our language of choice for this study.
+
+
+\subsubsection*{Naive Bayes}
+Naive Bayes is a supervised learning algorithm based on applying the Bayes' theorem with the "naive" assumption of independence between every pair of features. As such, we hypothesize that the modeling time would be on the shorter end of the spectrum, but could suffer in terms of prediction quality. The decision rule for Bernoulli Naive Bayes is based on the following (15):
+\begin{verbatim}
+P(x_i|y) = P(i|y)(x_i) + (1 - P(i|y))(1 - x_i)
+\end{verbatim}
+It explicitly penalizes the non-occurrence of a feature (15).
+
+==========================
+\subsubsection*{Support Vector Machine}
+\subsubsection*{Gradient Boosted Model}
+(7) Advantages over logistic regression: robust to outliers, can make predictions on missing data, handles unequal class sizes and unbalanced predictor variables, tend to have greater predictive ability
+(7) Drawbacks: trees can overfit especially if the number of ending nodes is small or number of trees is too large, definitely want to use cross validation
+(7) Use prediction rate as a measure of goodness of fit
 \subsubsection*{Logistic Regression}
 \subsubsection*{Generalized Linear Model}
 (4) glmnet fits a generalized linear model via penalized maximum likelihood.
 (6) it can deal with all shapes of data, including very large sparse data matrices.
-\subsubsection*{Generalized Boosted Model}
-(7) Advantages over logistic regression: robust to outliers, can make predictions on missing data, handles unequal class sizes and unbalanced predictor variables, tend to have greater predictive ability
-(7) Drawbacks: trees can overfit especially if the number of ending nodes is small or number of trees is too large, definitely want to use cross validation
-(7) Use prediction rate as a measure of goodness of fit
+==========================
 
-\section*{Methods}
-\subsection*{Data Collection}
-Demdex has Traits\/Segments, uuid and traits\/segments collected
-Table generating en\/es language to determine hispanic\/non-hispanic, 1 for es, 0 for en
-\begin{itemize}
-  \item segment\_hispanic: 80324851 total uuids
-  \item segment\_hispanic: 1698878 hispanic (2 percent)
-  \item segment\_hispanic2: 9733751 total uuids
-  \item segment\_hispanic2: 1868091 hispanic (19 percent)
-\end{itemize}
+\section*{Design}
 \subsection*{Data Processing}
-alldata: 7193606 x 2105480
-dataset: 1438721 x 44336
-datatrain: 356083 x 18582
-datatest: 3597 x 18582
-pdata: 0.02, ptest: 0.01
+The data used in this study was provided by CafeMom. The raw data is provided via hourly logs from Adobe Demdex. The logs are tab-delimited with a field for unique user ID (uuid) and a comma-delimited array of IDs referring to the traits that that user has satisfied. The data is read as a hive table and partitioned into hispanic and non-hispanic based on the user's User Agent trait. A hispanic user is assumed to have either trait 780664 or 920203 (e.g. their User Agent language is Spanish) while a non-hispanic user is assumed to have either trait 783538 or 920206 (their User Agent language is English). This is to ensure that our data is complementary and does not accidentally bias towards either group.
 
-datatrain: 64743 x 6223
+\begin{verbatim}
+insert overwrite table segment_hispanic 
+partition(class)
+select uuid, max(case when datatype = 4 
+and (array_contains(varints,780664) 
+or array_contains(varints,920203))
+then 1 else 0 end ) class
+from user_attribs2
+where (datatype = 4 and 
+(array_contains(varints,780664) 
+or array_contains(varints,783538) 
+or array_contains(varints,920203) 
+or array_contains(varints,920206)))
+group by uuid;
+\end{verbatim}
 
-datatrain0: 35000 x 10128
-datatrain1: 70000 x 10128
-datatrain: 142433 x 10128
+In total, the data had 80,324,851 total uuids with 1,698,878 uuids attributed to hispanic users. The percent of hispanic users in our population is therefore approximately 5\%. In accordance to the King and Zeng paper, which advised that the non-events be no more than 2- to 5-times the events, we weighted the hispanic users by selecting all the hispanic uuids and only 10\% of the non-events.
+\begin{verbatim}
+insert overwrite table segment_hispanic2
+partition(class)
+select * from ( 
+select * from segment_hispanic 
+where class = 1 
+union all 
+select * from segment_hispanic 
+tablesample(bucket 1 out of 10)
+) s;
+\end{verbatim}
 
-testdata: 1439 x 10128
-Sizes: small100, small250, small500, small1000
-Accuracies: small500, small2, small3, small4, small5
+The table segment\_hispanic2 consequently had 9,733,751 total uuids with around 19\% being hispanic uuids. The data was then processed with R such that the array of traits over all the UUIDs were exploded into separate columns, constituting the feature space. The matrix had 2,105,480 features. After sampling 1.5\% rows from the matrix so that we could limit how long the modeling would take, we removed all features  that were positive for fewer than 50 UUIDs. This data subset now had 142,433 UUIDs (rows) and 10,128 features (columns). The data was then further partitioned such to set aside approximately 1\% of the data to use as test/validation data.
 
-Fit - 3 data points: datatrain0, datatrain, datatrain1
-  Graph: time vs data, no error bars
-Predict -
-  Graph: time vs data: smalltest, small500, small1000 (datatrain)
-  Graph: accuracy vs train data [errorbars: small500, small2, small3, small4, small5]
-Tuning: if you have time
 
+In order to compare the algorithms on their model-fitting speed, we fitted the model using the original data, 0.5\% (approx. 70,000 rows), and 0.25\% (approx. 35,000 rows) of the data. We then used the first model (based on "all" the data) to determine how long it took to predict on 100, 250, 500, and 1000 rows of test data. Finally, we compared how much the accuracy improved by testing the three models on five samples ot 500 rows of test data. If time permitted, we tested several tuning parameters to see if it would significantly improve the performance of the algorithm in either speed or accuracy.
+
+
+\subsection*{Naive Bayes}
+Fitting data with \texttt{naiveBayes} in R is very simple (16). By default, laplace smoothing is set to 0. Increasing the smoothing would likely decrease the modeling time as the risk of underfitting.
+\begin{verbatim}
+library(e1071)
+system.time(fitnb[[1]]<-naiveBayes(
+                x=datatrain
+                , y=as.factor(ytrain)
+                , laplace=0
+                ))
+\end{verbatim}
+
+
+==========================
 \subsection*{Logistic Regression}
 We used \texttt{glmnet} (Generalized Linear Models) to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
@@ -87,10 +133,6 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 
 \subsection*{Support Vector Machines}
 
-
-\subsection*{Naive Bayes}
-
-
 \subsection*{Random Forest or Ferns}
 
 \subsection*{Comparison}
@@ -101,19 +143,61 @@ Then \texttt{predict.glm} is used to predict on the validation sample.
 data(example)
 @
 The above is a snippet of code used. 
+==========================
+
 
 \section*{Results}
-Compare time for execution \& accuracy between models\/methods. ex.Unweighted\/Non-filtered\/Logistic Regression
 
+\subsection*{RARE EVENTS=====}
 
-
-The below is a sample graph of data.
+\subsection*{Naive Bayes}
+The below plot depicts how the modelling time increased almost linear with restpect to the size of the training data. This is expected since Naive Bayes does not consider feature interactions, so it can fit the classifier in \texttt{O(m*n)} time, where \texttt{m} is the number of training examples and \texttt{n} is the number of features (17).
+<<nb1,fig=FALSE,height=2,width=3>>=
+m<-c(35000, 70000, 142433)
+ftimes<-c(82.248, 167.030, 294.883)
+plot(x=m,y=ftimes/60,type="l"
+     ,xlab="# training examples"
+     ,ylab="time (min)")
+@
 \begin{center}
-Something like a plot centered.
+=====[[NB1\_TIME]]=====
+
+Figure 1. Fitting time for Naive Bayes
 \end{center}
+The below, Figure 2, shows that 
+<<nb2,fig=FALSE,height=2,width=3>>=
+ptimes<-c(33.053, 82.095, 168.915, 335.145)
+sample<-c(100,250,500,1000)
+plot(x=sample,y=ptimes/60,type="l"
+     ,xlab="# test cases"
+     ,ylab="time (min)")
+@
+\begin{center}
+=====[[NB2\_TIME]]=====
+
+Figure 2. Predicting time for Naive Bayes
+\end{center}
+
+<<nb1,fig=FALSE,height=2,width=3>>=
+m<-c(35000, 70000, 142433)
+nb_acc<-c(0.7992, 0.8036, 0.8148)
+plot(x=m,y=nb_acc,type="l"
+     ,xlab="# training examples"
+     ,ylab="Accuracy (%)")
+@
+\begin{center}
+=====[[NB3\_TIME]]=====
+
+Figure 1. Accuracy of Naive Bayes
+\end{center}
+
 
 \section*{Conclusion}
 We have demonstrated the application of machine learning in advertising technology, in particular for a problem with rare events. 
+
+
+Rare Events: In addition, it allows us to model with less data and is therefore more efficient for this application.
+
 
 Our results should not be interpreted as a standard comparison of these algorithms. Since most algorithms, and their implementations in R, allow for the tuning of parameters (such as making learning steps smaller and testing various lambda values), without a doubt, the performance of these algorithms could be improved and therefore yield different results from our own research. This project is better served as an example procedure of how machine learning algorithms can be compared.
 
@@ -143,6 +227,12 @@ We used \texttt{RStudio Sweave} to build this \LaTeX{} document
   \item 9 http://www.inside-r.org/packages/cran/gbm/docs/gbm
   \item 10 http://jwijffels.github.io/RMOA/doc/pdf/Manual.pdf (MOA manual)
   \item 11 https://github.com/jwijffels/RMOA (streaming RMOA)
+  \item 12 http://wallblog.co.uk/2014/02/12/what-is-next-for-the-world-of-advertising-technology/
+  \item 13 http://www.grovo.com/display-advertising-fundamentals/the-key-players
+  \item 14 http://www.cafemom.com/
+  \item 15 http://scikit-learn.org/stable/modules/naive\_bayes.html
+  \item 16 http://www.inside-r.org/packages/cran/e1071/docs/naiveBayes
+  \item 17 https://www.biostars.org/p/8727/
 \end{itemize}
 
 

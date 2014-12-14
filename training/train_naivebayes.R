@@ -4,21 +4,6 @@ setwd('~/MLfinalproject/data/')
 load('weighted_smallsub.RData')
 ls()
 
-# Parameter info: http://www.inside-r.org/packages/cran/e1071/docs/naiveBayes
-# Data streaming: https://github.com/jwijffels/RMOA
-# http://www-users.cs.york.ac.uk/~jc/teaching/arin/R_practical/
-
-#Installation for RMOA
-#sudo apt-get install texlive-full
-install.packages("texlive")
-install.packages("devtools")
-library(devtools)
-install.packages("ff")
-install.packages("rJava")
-install_github("jwijffels/RMOA", subdir="RMOAjars/pkg")
-install_github("jwijffels/RMOA", subdir="RMOA/pkg")
-
-
 #install.packages("e1071")
 library(e1071)
 
@@ -39,6 +24,11 @@ system.time(fitnb[[3]]<-naiveBayes(x=datatrain, y=as.factor(ytrain)))
 #294.883   6.883 301.594
 save.image("weighted_nb.RData")
 
+sizes<-c(35000, 70000, 142433)
+times<-c(82.248, 167.030, 294.883)
+plot(x=sizes,y=times)
+
+
 #PREDICTING
 #Different sizes (datatrain)
 for(x in c(1:8)) {
@@ -54,6 +44,12 @@ system.time(prednb[[2]]<-predict(object=fitnb[[3]], newdata=datatest[small[[2]],
 #82.095   1.079  82.390
 system.time(prednb[[3]]<-predict(object=fitnb[[3]], newdata=datatest[small[[3]],], type="class", threshold=0.05))
 #335.145   3.435 335.402
+
+predtimes<-c(33.053, 82.095, 168.915, 335.145)
+samples<-c(100,250,500,1000)
+plot(x=sample,y=ptimes/60,type="l"
+     ,xlab="# test cases"
+     ,ylab="time (min)")
 
 system.time(prednb[[4]]<-predict(object=fitnb[[3]], newdata=datatest[small[[4]],], type="class", threshold=0.05))
 #168.915   1.735 169.046
@@ -92,17 +88,55 @@ rm(datatest, datatrain, fitnb, x)
 save.image("weighted_nb.RData")
 
 #########################
+setwd('~/_Main/School/CafeMom/MLfinalproject/data/')
+load('weighted_nb.RData')
+
+#Less Data
+table(prednb[[4:8]], ytest[small[[4:8]]], dnn=list('predicted','actual'))
+table(prednb[[9:13]], ytest[small[[4:8]]], dnn=list('predicted','actual'))
+table(prednb[[18]], ytest[small[[8]]], dnn=list('predicted','actual'))[2,1]
+#More Data
+nb_acc<-c(0,0,0)
+nb_fp<-c(0,0,0)
+nb_fn<-c(0,0,0)
+for(x in seq(4,8,1)) {
+  nb_acc[1]<-nb_acc[1]+
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x]]))))/length(ytest[small[[x]]]))
+  nb_fp[1]<-nb_fp[1]+
+    table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  nb_fn[1]<-nb_fn[1]+
+    table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  nb_acc[2]<-nb_acc[2]+
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x+5]]))))/length(ytest[small[[x]]]))
+  nb_fp[2]<-nb_fp[2]+
+    table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  nb_fn[2]<-nb_fn[2]+
+    table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  nb_acc[3]<-nb_acc[3]+
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x+10]]))))/length(ytest[small[[x]]]))
+  nb_fp[3]<-nb_fp[3]+
+    table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  nb_fn[3]<-nb_fn[3]+
+    table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+}
+nb_acc<-nb_acc/5
+nb_fp<-nb_fp/5
+nb_fn<-nb_fn/5
+nb_acc
+nb_fp
+nb_fn
 
 
-
-
-table(prednb100, ytest[small100], dnn=list('predicted','actual'))
+ROCsdat <- data.frame(cutpoint = c(-Inf, 5, 7, 9, Inf), TPR = c(0, 0.56, 0.78, 0.91, 1), FPR = c(0, 0.01, 0.19, 0.58, 1)) 
 
 1-(sum(abs(as.numeric(as.character(ytest[small100])) - as.numeric(as.character(prednb100))))/length(ytest[small100]))
 
 
-
-
+#TUNING:
+#Test Laplace: increases shrinkage
+system.time(fitnb[[4]]<-naiveBayes(x=datatrain[train0,]
+                                   , y=as.factor(ytrain[train0])
+                                   , laplace=1))
 
 summary(fit)
 
@@ -132,3 +166,6 @@ accuracy<-1-(sum(abs(as.numeric(as.character(ytest[smalltest])) -
 system.time(fit<-naiveBayes(x=datatrain, y=as.factor(ytrain)
                             #, laplace = 0 #0 disables laplace smoothing
 ))
+
+# Data streaming: https://github.com/jwijffels/RMOA
+# http://www-users.cs.york.ac.uk/~jc/teaching/arin/R_practical/
