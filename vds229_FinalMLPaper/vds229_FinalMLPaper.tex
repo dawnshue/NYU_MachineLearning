@@ -154,7 +154,7 @@ The above is a snippet of code used.
 \subsection*{RARE EVENTS=====}
 
 \subsection*{Naive Bayes}
-The below plot depicts how the modelling time increased almost linear with restpect to the size of the training data. This is expected since Naive Bayes does not consider feature interactions, so it can fit the classifier in \texttt{O(m*n)} time, where \texttt{m} is the number of training examples and \texttt{n} is the number of features (17).
+Figure 1 depicts how the modelling time increased almost linear with restpect to the size of the training data. This is expected since Naive Bayes does not consider feature interactions, so it can fit the classifier in \texttt{O(m*n)} time, where \texttt{m} is the number of training examples and \texttt{n} is the number of features (17).
 \begin{Schunk}
 \begin{Sinput}
 > m<-c(35000, 70000, 142433)
@@ -162,14 +162,33 @@ The below plot depicts how the modelling time increased almost linear with restp
 > plot(x=m,y=ftimes/60,type="l"
 +      ,xlab="# training examples"
 +      ,ylab="time (min)")
+> cor(m, ftimes) #0.9966318
 \end{Sinput}
+\begin{Soutput}
+[1] 0.9966318
+
+\end{Soutput}
+\begin{Sinput}
+> lm(ftimes ~ m) #m: 0.001947
+\end{Sinput}
+\begin{Soutput}
+
+Call:
+lm(formula = ftimes ~ m)
+
+Coefficients:
+(Intercept)            m  
+  20.802553     0.001947  
+
+
+\end{Soutput}
 \end{Schunk}
 \begin{center}
 =====[[NB1\_TIME]]=====
 
 Figure 1. Fitting time for Naive Bayes
 \end{center}
-The below, Figure 2, shows that 
+The below, Figure 2, also shows a fairly linear relationship between the predicting time and the size of the test sample.
 \begin{Schunk}
 \begin{Sinput}
 > ptimes<-c(33.053, 82.095, 168.915, 335.145)
@@ -177,7 +196,26 @@ The below, Figure 2, shows that
 > plot(x=sample,y=ptimes/60,type="l"
 +      ,xlab="# test cases"
 +      ,ylab="time (min)")
+> cor(sample, ptimes) #0.9999622
 \end{Sinput}
+\begin{Soutput}
+[1] 0.9999622
+
+\end{Soutput}
+\begin{Sinput}
+> lm(ptimes ~ sample) #0.3364
+\end{Sinput}
+\begin{Soutput}
+
+Call:
+lm(formula = ptimes ~ sample)
+
+Coefficients:
+(Intercept)       sample  
+    -0.7742       0.3364  
+
+
+\end{Soutput}
 \end{Schunk}
 \begin{center}
 =====[[NB2\_TIME]]=====

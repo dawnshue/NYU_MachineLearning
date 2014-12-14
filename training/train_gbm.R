@@ -75,39 +75,44 @@ predgbm<-list()
 system.time(newtrees<-gbm.perf(fitgbm[[1]], plot.it=FALSE, oobag.curve=FALSE
                                ,overlay=FALSE, method="cv"))
 newtrees<-10
-system.time(predgbm[[1]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[1]],], n.trees=newtrees, type="response"))
-0.062   0.000   0.062
-system.time(predgbm[[2]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[2]],], n.trees=newtrees, type="response"))
-0.119   0.000   0.120
-system.time(predgbm[[3]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[3]],], n.trees=newtrees, type="response"))
-0.412   0.036   0.447
-system.time(predgbm[[4]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[4]],], n.trees=newtrees, type="response"))
-0.216   0.000   0.216
-system.time(predgbm[[5]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[5]],], n.trees=newtrees, type="response"))
-0.216   0.000   0.216
-system.time(predgbm[[6]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[6]],], n.trees=newtrees, type="response"))
-0.218   0.000   0.218
-system.time(predgbm[[7]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[7]],], n.trees=newtrees, type="response"))
-0.219   0.000   0.220
-system.time(predgbm[[8]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[8]],], n.trees=newtrees, type="response"))
-0.22    0.00    0.22
+system.time(predgbm[[1]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[1]],], n.trees=newtrees, type="response"))
+0.078   0.000   0.080
+system.time(predgbm[[2]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[2]],], n.trees=newtrees, type="response"))
+0.133   0.023   0.156
+system.time(predgbm[[3]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[3]],], n.trees=newtrees, type="response"))
+0.464   0.051   0.516
+system.time(predgbm[[4]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[4]],], n.trees=newtrees, type="response"))
+0.254   0.000   0.253
+system.time(predgbm[[5]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[5]],], n.trees=newtrees, type="response"))
+0.254   0.000   0.253
+system.time(predgbm[[6]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[6]],], n.trees=newtrees, type="response"))
+0.228   0.000   0.227
+system.time(predgbm[[7]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[7]],], n.trees=newtrees, type="response"))
+0.227   0.000   0.226 
+system.time(predgbm[[8]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[8]],], n.trees=newtrees, type="response"))
+0.226   0.000   0.227
 
 system.time(predgbm[[9]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[4]],], n.trees=newtrees, type="response"))
-0.221   0.000   0.220
+0.228   0.000   0.227
 system.time(predgbm[[10]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[5]],], n.trees=newtrees, type="response"))
-0.220   0.000   0.219
+0.228   0.000   0.228
 system.time(predgbm[[11]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[6]],], n.trees=newtrees, type="response"))
-0.22    0.00    0.22
+0.228   0.000   0.228
 system.time(predgbm[[12]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[7]],], n.trees=newtrees, type="response"))
-0.22    0.00    0.22
+0.227   0.000   0.228
 system.time(predgbm[[13]]<-predict.gbm(object=fitgbm[[2]], newdata=datatest[small[[8]],], n.trees=newtrees, type="response"))
-0.221   0.000   0.221
+0.23    0.00    0.23
 
-system.time(predgbm[[14]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[4]],], n.trees=newtrees, type="response"))
-system.time(predgbm[[15]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[5]],], n.trees=newtrees, type="response"))
-system.time(predgbm[[16]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[6]],], n.trees=newtrees, type="response"))
-system.time(predgbm[[17]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[7]],], n.trees=newtrees, type="response"))
-system.time(predgbm[[18]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[8]],], n.trees=newtrees, type="response"))
+system.time(predgbm[[14]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[4]],], n.trees=newtrees, type="response"))
+0.227   0.000   0.227
+system.time(predgbm[[15]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[5]],], n.trees=newtrees, type="response"))
+0.229   0.000   0.227
+system.time(predgbm[[16]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[6]],], n.trees=newtrees, type="response"))
+0.228   0.000   0.227
+system.time(predgbm[[17]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[7]],], n.trees=newtrees, type="response"))
+0.229   0.000   0.228 
+system.time(predgbm[[18]]<-predict.gbm(object=fitgbm[[1]], newdata=datatest[small[[8]],], n.trees=newtrees, type="response"))
+0.229   0.000   0.228
 
 rm(datatrain, x, fitgbm)
 save.image("weighted_gbm.RData")
