@@ -14,32 +14,35 @@ system.time(fitgbm[[1]]<-gbm.fit(x=datatrain[train0,], y=ytrain[train0]
                                  , distribution="bernoulli"
                                  , n.trees = 100
                                  , shrinkage = 1
-                                 , interaction.depth = 2
+                                 , interaction.depth = 3
                                  , n.minobsinnode = 10
                                  , keep.data = FALSE
                                  , verbose = FALSE))
 #569.411   4.867 573.688
-save.image("weighted_gbm.RData")
+#interaction=2: 1004.997    5.823 1010.887
+#interaction=3: 1454.484    5.550 1460.064
+save.image("weighted_gbm2.RData")
 system.time(fitgbm[[2]]<-gbm.fit(x=datatrain[train1,], y=ytrain[train1]
                                  , n.trees = 100
                                  , shrinkage = 1
-                                 , interaction.depth = 1
+                                 , interaction.depth = 2
                                  , n.minobsinnode = 10
                                  , keep.data = FALSE
                                  , distribution="bernoulli", verbose = FALSE))
 #1145.877   10.190 1154.894
-save.image("weighted_gbm.RData")
+#2006.688    9.800 2016.545
+save.image("weighted_gbm2.RData")
 system.time(fitgbm[[3]]<-gbm.fit(x=datatrain, y=ytrain
                                  , n.trees = 100
                                  , shrinkage = 1
-                                 , interaction.depth = 1
+                                 , interaction.depth = 2
                                  , n.minobsinnode = 10
                                  , keep.data = FALSE
                                  , distribution="bernoulli", verbose = FALSE))
 #
-save.image("weighted_gbm.RData")
+save.image("weighted_gbm2.RData")
 #2349.197   22.782 2369.626
-
+#4103.233   23.015 4126.407
 
 ##### PERFORM PREDICT
 for(x in c(1:8)) {
@@ -73,10 +76,10 @@ for(x in seq(4,8,1)) {
   flush.console()
 }
 
-predgbm<-list()
 system.time(newtrees<-gbm.perf(fitgbm[[1]], plot.it=FALSE, oobag.curve=FALSE
                                ,overlay=FALSE, method="cv"))
 newtrees<-100
+predgbm<-list()
 system.time(predgbm[[1]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[1]],], n.trees=newtrees, type="response"))
 #0.078   0.000   0.080
 system.time(predgbm[[2]]<-predict.gbm(object=fitgbm[[3]], newdata=datatest[small[[2]],], n.trees=newtrees, type="response"))
@@ -124,7 +127,7 @@ pred[which(pred>=0.5)]<-1
 pred[which(pred<0.5)]<-0
 table(pred, ytest[small[[1]]], dnn=list('predicted','actual'))
 ############################################
-predgbm<-predgbm2
+predgbm2<-predgbm
 for(g in 1:length(predgbm)) {
   p<-predgbm[[g]]
   p[which(p>=0.5)]<-1
@@ -135,11 +138,11 @@ gbm_acc<-c(0,0,0)
 gbm_fp<-c(0,0,0)
 gbm_fn<-c(0,0,0)
 for(x in seq(4,8,1)) {
-  gbm_acc[1]<-gbm_acc[1]+
+  gbm_acc[3]<-gbm_acc[3]+
     1-(sum(abs(ytest[small[[x]]] - predgbm[[x]]))/length(ytest[small[[x]]]))
-  gbm_fp[1]<-gbm_fp[1]+
+  gbm_fp[3]<-gbm_fp[3]+
     table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  gbm_fn[1]<-gbm_fn[1]+
+  gbm_fn[3]<-gbm_fn[3]+
     table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
   gbm_acc[2]<-gbm_acc[2]+
     1-(sum(abs(ytest[small[[x]]] - predgbm[[x+5]]))/length(ytest[small[[x]]]))
@@ -147,11 +150,11 @@ for(x in seq(4,8,1)) {
     table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   gbm_fn[2]<-gbm_fn[2]+
     table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
-  gbm_acc[3]<-gbm_acc[3]+
+  gbm_acc[1]<-gbm_acc[1]+
     1-(sum(abs(ytest[small[[x]]] - predgbm[[x+10]]))/length(ytest[small[[x]]]))
-  gbm_fp[3]<-gbm_fp[3]+
+  gbm_fp[1]<-gbm_fp[1]+
     table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  gbm_fn[3]<-gbm_fn[3]+
+  gbm_fn[1]<-gbm_fn[1]+
     table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
 }
 gbm_acc<-gbm_acc/5
