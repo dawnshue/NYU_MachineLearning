@@ -19,6 +19,30 @@ library(e1071)
 
 ##### PERFORM FIT
 fitsvm<-list()
+system.time(fitsvm[[1]]<-svm(x=datatrain[train0,]
+                             , y=ytrain[train0]
+                             , scale=FALSE
+                             , type="C-classification"
+                             , kernel="linear"
+                             , probability=TRUE))
+presvm<-list()
+system.time(predsvm[[1]]<-predict(object=fitsvm[[1]]
+                                  , newdata=datatest[small[[1]],]
+                                  , probability=TRUE
+                                  ))
+system.time(predsvm[[1]]<-predict(object=fitsvm[[1]]
+                                  , newdata=datatest[small[[1]],]
+                                  , probability=FALSE
+                                  ))
+
+system.time(fitsvm[[2]]<-svm(x=datatrain[train0,]
+                             , y=as.factor(ytrain[train0])
+                             , scale=FALSE
+                             , type="C-classification"
+                             , kernel="linear"
+                             , probability=FALSE))
+
+
 system.time(fitsvm[[1]]<-svm(x=datatrain[train0,], y=as.factor(ytrain[train0])))
 #   user  system elapsed 
 #436.036   7.616 443.664
@@ -67,12 +91,18 @@ for(x in seq(4,8,1)) {
 }
 
 predsvm<-list()
-system.time(predsvm[[1]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[1]],], type="class"))
-6.115   1.124   7.240
+system.time(predsvm[[1]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[1]],]))
+#6.115   1.124   7.240
 system.time(predsvm[[2]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[2]],], type="class"))
-7.448   0.788   8.236
+#7.448   0.788   8.236
 system.time(predsvm[[3]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[3]],], type="class"))
-14.865   0.720  15.585
+#14.865   0.720  15.585
+ptimes<-c(6.115, 7.448, 9.808, 14.865)/60
+samples<-c(100,250,500,1000)
+plot(x=sample,y=ptimes,type="l"
+     ,xlab="# test cases"
+     ,ylab="time (min)")
+
 system.time(predsvm[[4]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[4]],], type="class"))
 9.808   0.832  10.640
 system.time(predsvm[[5]]<-predict(object=fitsvm[[3]], newdata=datatest[small[[5]],], type="class"))
@@ -109,33 +139,42 @@ table(pred, ytest, dnn=list('predicted','actual'))
 accuracy<-1-(sum(abs(as.numeric(as.character(ytest[smalltest])) - 
                        as.numeric(as.character(pred))))/length(ytest[smalltest]))
 ##########################################
-system.time(fit<-svm(x=datatrain
-         , y=as.factor(ytrain)
-         , scale=TRUE
-         , type = NULL
-         , kernel = "radial"
-         , degree = 3
-         , gamma = if(is.vector(datatrain)) 1 else 1/ncol(datatrain)
-         , coef0 = 0
-         , cost = 1
-         , nu = 0.5
-         , class.weights = NULL
-         , cachesize = 40
-         , tolerance = 0.001
-         , epsilon = 0.1
-         , shrinking = TRUE
-         , cross = 0
-         , probability = FALSE
-         , fitted = TRUE
-         , seed = 1L
-         ))
-#Defaults
-#    user   system  elapsed 
-#1323.354    5.066 1327.324 
+svm_acc<-c(0,0,0)
+svm_fp<-c(0,0,0)
+svm_fn<-c(0,0,0)
+for(x in seq(4,8,1)) {
+  svm_acc[1]<-svm_acc[1]+
+    1-(sum(abs(ytest[small[[x]]] - as.numeric(as.character(predsvm[[x]]))))/length(ytest[small[[x]]]))
+  svm_fp[1]<-svm_fp[1]+
+    table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  svm_fn[1]<-svm_fn[1]+
+    table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  svm_acc[2]<-svm_acc[2]+
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predsvm[[x+5]]))))/length(ytest[small[[x]]]))
+  svm_fp[2]<-svm_fp[2]+
+    table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  svm_fn[2]<-svm_fn[2]+
+    table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  svm_acc[3]<-svm_acc[3]+
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predsvm[[x+10]]))))/length(ytest[small[[x]]]))
+  svm_fp[3]<-svm_fp[3]+
+    table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  svm_fn[3]<-svm_fn[3]+
+    table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+}
+svm_acc<-svm_acc/5
+svm_fp<-svm_fp/5
+svm_fn<-svm_fn/5
+svm_acc
+svm_fp
+svm_fn
 
 
 system.time(pred<-predict(fit
                           , newdata=datatest))
+
+
+
 table(pred, ytest, dnn=list('predicted','actual'))
 #smalltest=300, actual
 #predicted   0   1
