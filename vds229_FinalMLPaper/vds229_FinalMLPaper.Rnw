@@ -404,11 +404,11 @@ Figure 11. Predicting time for GLM
 
 <<gbm3,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-acc<-c(0,0,0)
+acc<-c(0.8976,0.9004,0.9012)-0.8976
 #ave(nb_acc): 0.8058667
-fp<-c(0,0,0)
-fn<-c(0,0,0)
-yax<-c(-0.003,0.003)
+fp<-c(0.0152,0.0152,0.0132)-0.0152
+fn<-c(0.0872,0.0844,0.0856)-0.0872
+yax<-c(-0.004,0.004)
 plot(x=m,y=acc,type="b"
      ,xlab="# training examples"
      ,ylab="d/dx Accuracy (%)"
@@ -493,14 +493,14 @@ Figure 14. Comparison of predicting times
 
 <<gbm2,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-acc1<-c(0.8148, 0.8036,0.7992)
-acc2<-c(0.8916,0.8916,0.8908)
-acc3<-c(0.8976,0.8952,0.9016)
-acc4<-c(0,0,0)
-ytimes<-c(0.75,1)
+acc1<-c(0.8148, 0.8036,0.7992)*100
+acc2<-c(0.8916,0.8916,0.8908)*100
+acc3<-c(0.8976,0.8952,0.9016)*100
+acc4<-c(0.8976,0.9004,0.9012)*100
+ytimes<-c(75,95)
 plot(x=m,y=acc1,type="b"
      ,xlab="# training examples"
-     ,ylab="Predicting time (sec)"
+     ,ylab="Accuracy (%)"
      ,ylim=ytimes)
 par(new=TRUE)
 plot(x=m,y=acc2,type="b",axes=FALSE

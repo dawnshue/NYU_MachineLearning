@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  15 DEC 2014 05:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  15 DEC 2014 06:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -379,7 +379,7 @@ File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 \Gin@req@height=\dimen162
 \Gin@req@width=\dimen163
 )
-No file vds229_TEXpaper.aux.
+(./vds229_TEXpaper.aux)
 \openout1 = `vds229_TEXpaper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
@@ -397,6 +397,7 @@ LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Try loading font information for T1+pplx on input line 76.
+
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
@@ -467,6 +468,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 76.
 LaTeX Info: Redefining \pageref on input line 76.
 LaTeX Info: Redefining \nameref on input line 76.
+
+(./vds229_TEXpaper.out) (./vds229_TEXpaper.out)
 \@outlinefile=\write3
 \openout3 = `vds229_TEXpaper.out'.
 
@@ -546,133 +549,37 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
 
-
-LaTeX Warning: Citation `12' on page 1 undefined on input line 102.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 102--103
 [][]\T1/pplx/m/n/10 (+20) line ad-ver-tis-ing has un-der-gone
  []
 
-
-LaTeX Warning: Citation `13' on page 1 undefined on input line 104.
-
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Citation `1' on page 2 undefined on input line 109.
-
-
-LaTeX Warning: Citation `1' on page 2 undefined on input line 111.
-
-
-LaTeX Warning: Citation `1' on page 2 undefined on input line 111.
-
-
-LaTeX Warning: Citation `1' on page 2 undefined on input line 111.
-
-
-LaTeX Warning: Citation `2' on page 2 undefined on input line 113.
-
-
-LaTeX Warning: Citation `2' on page 2 undefined on input line 113.
-
-
-LaTeX Warning: Citation `15' on page 2 undefined on input line 119.
-
 [2]
-
-LaTeX Warning: Citation `15' on page 3 undefined on input line 121.
-
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 121.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1cmtt.fd
+ (/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
-
-LaTeX Warning: Citation `22' on page 3 undefined on input line 121.
-
-
-LaTeX Warning: Citation `19' on page 3 undefined on input line 124.
-
-
-LaTeX Warning: Citation `20' on page 3 undefined on input line 124.
-
-
-LaTeX Warning: Citation `23' on page 3 undefined on input line 127.
-
-
-LaTeX Warning: Citation `21' on page 3 undefined on input line 127.
-
-
-LaTeX Warning: Citation `27' on page 3 undefined on input line 131.
-
-
-LaTeX Warning: Citation `7' on page 3 undefined on input line 131.
-
-
-LaTeX Warning: Citation `7' on page 3 undefined on input line 131.
-
-
-LaTeX Warning: Citation `30' on page 3 undefined on input line 134.
-
-
-LaTeX Warning: Citation `10' on page 3 undefined on input line 134.
-
-
-LaTeX Warning: Citation `32' on page 3 undefined on input line 136.
-
-
-LaTeX Warning: Citation `4' on page 3 undefined on input line 136.
-
-
-LaTeX Warning: Citation `6' on page 3 undefined on input line 136.
-
-[3]
+ [3]
 Overfull \hbox (4.94643pt too wide) in paragraph at lines 172--172
 []\T1/cmtt/m/n/10 insert overwrite table segment_hispanic2[] 
  []
 
-
-LaTeX Warning: Citation `16' on page 4 undefined on input line 179.
-
-
-LaTeX Warning: Citation `16' on page 4 undefined on input line 179.
-
 [4]
-
-LaTeX Warning: Citation `24' on page 5 undefined on input line 194.
-
-
-LaTeX Warning: Citation `26' on page 5 undefined on input line 194.
-
-
-LaTeX Warning: Citation `23' on page 5 undefined on input line 194.
-
-
-LaTeX Warning: Citation `24' on page 5 undefined on input line 194.
-
-
 Overfull \hbox (10.19514pt too wide) in paragraph at lines 208--208
 []                \T1/cmtt/m/n/10 , type="C-classification"[] 
  []
 
-
-LaTeX Warning: Citation `29' on page 5 undefined on input line 211.
-
-
-LaTeX Warning: Citation `4' on page 5 undefined on input line 234.
-
 [5]
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 256.
- <../data/nb_acc.png, id=46, 323.2075pt x 297.11pt>
+ <../data/nb_acc.png, id=171, 323.2075pt x 297.11pt>
 File: ../data/nb_acc.png Graphic file (type png)
 
 <use ../data/nb_acc.png>
@@ -683,7 +590,7 @@ Overfull \hbox (22.61974pt too wide) in paragraph at lines 287--288
  [][] 
  []
 
-[6 <../data/nb_acc.png>] <../data/svm_acc.png, id=60, 323.2075pt x 297.11pt>
+[6 <../data/nb_acc.png>] <../data/svm_acc.png, id=181, 323.2075pt x 297.11pt>
 File: ../data/svm_acc.png Graphic file (type png)
 
 <use ../data/svm_acc.png>
@@ -694,7 +601,7 @@ Overfull \hbox (22.61974pt too wide) in paragraph at lines 325--326
  [][] 
  []
 
-<../data/gbm_acc.png, id=61, 323.2075pt x 297.11pt>
+<../data/gbm_acc.png, id=182, 323.2075pt x 297.11pt>
 File: ../data/gbm_acc.png Graphic file (type png)
  <use ../data/gbm_acc.png>
 Package pdftex.def Info: ../data/gbm_acc.png used on input line 365.
@@ -705,337 +612,326 @@ Overfull \hbox (22.61974pt too wide) in paragraph at lines 365--366
  []
 
 [7 <../data/svm_acc.png>]
+<../data/glm_acc.png, id=194, 323.2075pt x 347.2975pt>
+File: ../data/glm_acc.png Graphic file (type png)
 
-./vds229_TEXpaper.tex:403: LaTeX Error: File `../data/glm_fit' not found.
+<use ../data/glm_acc.png>
+Package pdftex.def Info: ../data/glm_acc.png used on input line 403.
+(pdftex.def)             Requested size: 227.62204pt x 244.5851pt.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.403 ...cludegraphics[width=8cm]{../data/glm_fit}
-                                                  
-? 
-<../data/all_fit.png, id=74, 323.2075pt x 297.11pt>
-File: ../data/all_fit.png Graphic file (type png)
- <use ../data/all_fit.png>
-Package pdftex.def Info: ../data/all_fit.png used on input line 411.
-(pdftex.def)             Requested size: 227.62204pt x 209.24043pt.
-
-Overfull \hbox (22.61974pt too wide) in paragraph at lines 411--412
+Overfull \hbox (22.61974pt too wide) in paragraph at lines 403--404
  [][] 
  []
 
-<../data/all_pred.png, id=75, 323.2075pt x 297.11pt>
+<../data/all_fit.png, id=195, 323.2075pt x 297.11pt>
+File: ../data/all_fit.png Graphic file (type png)
+ <use ../data/all_fit.png>
+Package pdftex.def Info: ../data/all_fit.png used on input line 412.
+(pdftex.def)             Requested size: 227.62204pt x 209.24043pt.
+
+Overfull \hbox (22.61974pt too wide) in paragraph at lines 412--413
+ [][] 
+ []
+
+[8 <../data/gbm_acc.png> <../data/glm_acc.png>]
+<../data/all_pred.png, id=206, 323.2075pt x 297.11pt>
 File: ../data/all_pred.png Graphic file (type png)
 
 <use ../data/all_pred.png>
-Package pdftex.def Info: ../data/all_pred.png used on input line 419.
+Package pdftex.def Info: ../data/all_pred.png used on input line 418.
 (pdftex.def)             Requested size: 227.62204pt x 209.24043pt.
 
-Overfull \hbox (22.61974pt too wide) in paragraph at lines 419--420
+Overfull \hbox (22.61974pt too wide) in paragraph at lines 418--419
  [][] 
  []
 
+<../data/all_acc.png, id=207, 323.2075pt x 347.2975pt>
+File: ../data/all_acc.png Graphic file (type png)
 
-Overfull \vbox (6.19543pt too high) has occurred while \output is active []
+<use ../data/all_acc.png>
+Package pdftex.def Info: ../data/all_acc.png used on input line 424.
+(pdftex.def)             Requested size: 227.62204pt x 244.5851pt.
 
+Overfull \hbox (22.61974pt too wide) in paragraph at lines 424--425
+ [][] 
+ []
 
-[8 <../data/gbm_acc.png> <../data/all_fit.png>]
-
-LaTeX Warning: Citation `18' on page 9 undefined on input line 434.
-
-
-LaTeX Warning: Citation `8' on page 9 undefined on input line 434.
-
-[9 <../data/all_pred.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+[9 <../data/all_fit.png> <../data/all_pred.png> <../data/all_acc.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 []\T1/pplx/m/n/10 (+20) Connolly, M (2014). What is
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 \T1/pplx/m/n/10 (+20) next for the world of ad-ver-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 \T1/pplx/m/n/10 (+20) tis-ing tech-nol-ogy? The Wall.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 \T1/pplx/m/n/10 (-15) http://wallblog.co.uk/2014/02/12/what-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 \T1/pplx/m/n/10 (+20) is-next-for-the-world-of-advertising-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 []\T1/pplx/m/n/10 (+20) (2014) Dis-play Ad-ver-tis-ing Fun-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 \T1/pplx/m/n/10 (+20) da-men-tals: the Key Play-ers.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 \T1/pplx/m/n/10 (+20) http://www.grovo.com/display-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 \T1/pplx/m/n/10 (+20) advertising-fundamentals/the-key-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 451--452
+Underfull \hbox (badness 10000) in paragraph at lines 456--457
 []\T1/pplx/m/n/10 (+20) Allison, P (2012). Lo-gis-tic Re-gres-
  []
 
 
-Overfull \hbox (12.89977pt too wide) in paragraph at lines 451--452
+Overfull \hbox (12.89977pt too wide) in paragraph at lines 456--457
 \T1/pplx/m/n/10 (-20) http://www.statisticalhorizons.com/logistic-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
+Underfull \hbox (badness 10000) in paragraph at lines 457--458
 []\T1/pplx/m/n/10 (+20) (2014). 1.7. Naive Bayes.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
+Underfull \hbox (badness 10000) in paragraph at lines 457--458
 \T1/pplx/m/n/10 (+20) scikit: learn. http://scikit-
  []
 
 
-Overfull \hbox (11.38097pt too wide) in paragraph at lines 452--453
+Overfull \hbox (11.38097pt too wide) in paragraph at lines 457--458
 \T1/pplx/m/n/10 (-20) learn.org/stable/modules/naive_bayes.html 
  []
 
-
-Underfull \hbox (badness 5578) in paragraph at lines 453--454
+[10]
+Underfull \hbox (badness 5578) in paragraph at lines 458--459
 []\T1/pplx/m/n/10 (+20) (2014). Data Min-ing Al-go-rithms in
  []
 
 
-Overfull \hbox (255.9462pt too wide) in paragraph at lines 453--454
+Overfull \hbox (255.9462pt too wide) in paragraph at lines 458--459
 \T1/pplx/m/n/10 (-20) http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R/
 Classification/Na%C3%AFve_Bayes 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 454--455
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
 []\T1/pplx/m/n/10 (+20) Breiman, L. and Cut-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 454--455
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
 \T1/pplx/m/n/10 (+20) ler, A. Ran-dom Forests.
  []
 
 
-Overfull \hbox (131.79947pt too wide) in paragraph at lines 454--455
+Overfull \hbox (131.79947pt too wide) in paragraph at lines 459--460
 \T1/pplx/m/n/10 (-20) https://www.stat.berkeley.edu/[]breiman/RandomForests/cc_
 home.htm 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
 []\T1/pplx/m/n/10 (+20) Lim, A (2014). Pack-age 'bi-grf'.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
 \T1/pplx/m/n/10 (+20) CRAN R-Project: http://cran.r-
  []
 
 
-Overfull \hbox (3.62299pt too wide) in paragraph at lines 455--456
+Overfull \hbox (3.62299pt too wide) in paragraph at lines 460--461
 \T1/pplx/m/n/10 (-20) project.org/web/packages/bigrf/bigrf.pdf 
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 456--457
+Underfull \hbox (badness 5578) in paragraph at lines 461--462
 []\T1/pplx/m/n/10 (+20) (2014). Data Min-ing Al-go-rithms in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 456--457
+Underfull \hbox (badness 10000) in paragraph at lines 461--462
 \T1/pplx/m/n/10 (+20) R/Classification/SVM. Wik-i-Books:
  []
 
 
-Overfull \hbox (183.85126pt too wide) in paragraph at lines 456--457
+Overfull \hbox (183.85126pt too wide) in paragraph at lines 461--462
 \T1/pplx/m/n/10 (-20) http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R/
 Classification/SVM 
  []
 
 
-Overfull \hbox (18.34967pt too wide) in paragraph at lines 458--459
+Overfull \hbox (18.34967pt too wide) in paragraph at lines 463--464
 \T1/pplx/m/n/10 (-20) http://www.statsoft.com/Textbook/Boosting-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--460
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 []\T1/pplx/m/n/10 (+20) Campbell, W. (2014). Us-ing a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--460
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 \T1/pplx/m/n/10 (+20) GBM for Clas-si-fi-ca-tion in R.
  []
 
 
-Underfull \hbox (badness 6332) in paragraph at lines 460--461
+Underfull \hbox (badness 6332) in paragraph at lines 465--466
 []\T1/pplx/m/n/10 (+20) Christopher M. Bishop (2006). Pat-
  []
 
 
-Underfull \hbox (badness 7944) in paragraph at lines 461--462
+Underfull \hbox (badness 7944) in paragraph at lines 466--467
 []\T1/pplx/m/n/10 (+20) Bifet, A., Kirkby, R., Philip, K.,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
+Underfull \hbox (badness 10000) in paragraph at lines 466--467
 \T1/pplx/m/n/10 (+20) Reute-mann, P. (2012). Mas-sive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
+Underfull \hbox (badness 10000) in paragraph at lines 466--467
 \T1/pplx/m/n/10 (+20) On-line Anal-y-sis Man-ual. COSI.
  []
 
 
-Overfull \hbox (61.11859pt too wide) in paragraph at lines 461--462
+Overfull \hbox (61.11859pt too wide) in paragraph at lines 466--467
 \T1/pplx/m/n/10 (-20) http://jwijffels.github.io/RMOA/doc/pdf/Manual.pdf 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 462--463
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
 []\T1/pplx/m/n/10 (+20) Shalizi, Cosma (2012). Chap-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 462--463
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
 \T1/pplx/m/n/10 (+20) ter 12: Lo-gis-tic Re-gres-sion.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 462--463
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
 \T1/pplx/m/n/10 (+20) http://www.stat.cmu.edu/ cshal-
  []
 
 
-Underfull \hbox (badness 5288) in paragraph at lines 463--464
+Underfull \hbox (badness 5288) in paragraph at lines 468--469
 \T1/pplx/m/n/10 (+20) net'. CRAN R-Project. http://cran.r-
  []
 
 
-Overfull \hbox (23.00735pt too wide) in paragraph at lines 463--464
+Overfull \hbox (23.00735pt too wide) in paragraph at lines 468--469
 \T1/pplx/m/n/10 (-20) project.org/web/packages/glmnet/glmnet.pdf 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
 []\T1/pplx/m/n/10 (+20) Friedman, J., Hastie, T., Si-mon,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
 \T1/pplx/m/n/10 (+20) N., Tib-shi-rani, R. (2014). glm-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
 \T1/pplx/m/n/10 (+20) net. inside-R: http://www.inside-
  []
 
 
-Overfull \hbox (6.03516pt too wide) in paragraph at lines 464--465
+Overfull \hbox (6.03516pt too wide) in paragraph at lines 469--470
 \T1/pplx/m/n/10 (-20) r.org/packages/cran/glmnet/docs/glmnet 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--466
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
 []\T1/pplx/m/n/10 (+20) Meyer, D. (2014). naive-Bayes.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--466
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
 \T1/pplx/m/n/10 (+20) inside-R: http://www.inside-
  []
 
 
-Overfull \hbox (16.94873pt too wide) in paragraph at lines 465--466
+Overfull \hbox (16.94873pt too wide) in paragraph at lines 470--471
 \T1/pplx/m/n/10 (-20) r.org/packages/cran/e1071/docs/naiveBayes 
  []
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 466--467
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
 []\T1/pplx/m/n/10 (+20) Meyer, D. (2014). svm. inside-R:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 467--468
+Underfull \hbox (badness 10000) in paragraph at lines 472--473
 []\T1/pplx/m/n/10 (+20) (2014). Sup-port Vec-tor Ma-chines
  []
 
 
-Overfull \hbox (12.67429pt too wide) in paragraph at lines 467--468
+Overfull \hbox (12.67429pt too wide) in paragraph at lines 472--473
 \T1/pplx/m/n/10 (-20) http://www.statsoft.com/textbook/support-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--469
+Underfull \hbox (badness 10000) in paragraph at lines 473--474
 []\T1/pplx/m/n/10 (+20) Ridgeway, G. (2014). gbm.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--469
+Underfull \hbox (badness 10000) in paragraph at lines 473--474
 \T1/pplx/m/n/10 (+20) inside-R: http://www.inside-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 469--470
+Underfull \hbox (badness 10000) in paragraph at lines 474--475
 []\T1/pplx/m/n/10 (+20) (2014). Apache Ma-hout.
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 477.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 482.
 [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 477.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 482.
  (./vds229_TEXpaper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 477.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 477.
-
-
-Package rerunfilecheck Warning: File `vds229_TEXpaper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `vds229_TEXpaper.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D62D4A33DD2B1BAFA362CF6CE4FA9559;1368.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 477.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 482.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 482.
+Package rerunfilecheck Info: File `vds229_TEXpaper.out' has not changed.
+(rerunfilecheck)             Checksum: D62D4A33DD2B1BAFA362CF6CE4FA9559;1368.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 482.
  ) 
 Here is how much of TeX's memory you used:
- 9752 strings out of 493117
- 149313 string characters out of 6135433
- 359228 words of memory out of 5000000
- 12739 multiletter control sequences out of 15000+600000
+ 9778 strings out of 493117
+ 149939 string characters out of 6135433
+ 360892 words of memory out of 5000000
+ 12769 multiletter control sequences out of 15000+600000
  68435 words of font info for 263 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,11n,43p,1409b,702s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,11n,43p,1409b,699s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
 live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
@@ -1046,10 +942,10 @@ mf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2014/texmf-dist
 /fonts/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts
 /type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/
 urw/palatino/uplri8a.pfb>
-Output written on vds229_TEXpaper.pdf (11 pages, 229234 bytes).
+Output written on vds229_TEXpaper.pdf (11 pages, 257851 bytes).
 PDF statistics:
- 174 PDF objects out of 1000 (max. 8388607)
- 141 compressed objects within 2 object streams
- 70 named destinations out of 1000 (max. 500000)
- 48154 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 277 PDF objects out of 1000 (max. 8388607)
+ 239 compressed objects within 3 object streams
+ 71 named destinations out of 1000 (max. 500000)
+ 48332 words of extra memory for PDF output out of 51595 (max. 10000000)
 

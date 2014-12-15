@@ -21,7 +21,7 @@ system.time(fitglm[[2]]<-glmnet(x=datatrain[train1,], y=ytrain[train1], family="
 system.time(fitglm[[3]]<-glmnet(x=datatrain, y=ytrain, family="binomial"))
 #user  system elapsed 
 #808.587   2.070 809.759
-
+#6451.669
 save.image("weighted_glm2.RData")
 
 ##### PERFORM PREDICT
@@ -103,9 +103,11 @@ save.image("weighted_glm.RData")
 load('weighted_glm2.RData')
 predglm2<-list()
 for(g in 1:length(predglm)) {
-  predglm2[[g]]<-as.numeric(as.character(predglm[[g]][,1]))
+  predglm2[[g]]<-round(rowSums(t(apply(predglm[[g]],1,as.numeric)))/100)
 }
 summary(predglm2)
+oldglm<-predglm
+predglm<-predglm2
 glm_acc<-c(0,0,0)
 glm_fp<-c(0,0,0)
 glm_fn<-c(0,0,0)

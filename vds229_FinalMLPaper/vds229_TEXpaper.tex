@@ -366,7 +366,7 @@ $1000$ & $0.464$ \\
 \end{figure}
 
 \subsection{Logistic Regression}
-The fitting time for \textbf{glm} also increase significantly with additional training examples in a seemingly exponential fashion. The predicting time however, is almost half that of the general boosted model.
+The fitting time for \textbf{glmnet} also increase significantly with additional training examples in a seemingly exponential fashion. The fitting time for our largest training set was almost as poor as that of the SVMs. The predicting time is the smallest of the four algorithms, at almost half that of the general boosted model. More importantly, \textbf{glmnet} exhibits the best accuracy, averaging at 90\% for all the tests. It also showed some improved fit with additional training data.
 
 \begin{table}[H]
 \caption{GLM fitting times}
@@ -400,10 +400,11 @@ $1000$ & $0.274$ \\
 \begin{figure}[H]
  \caption{GLM performance (black: accuracy, blue: false-positve, red: false-negative)}
   \centering
-    \includegraphics[width=8cm]{../data/glm_fit}
+    \includegraphics[width=8cm]{../data/glm_acc}
 \end{figure}
 
 \subsection{Comparison}
+In Figure 5, the fitting times for the four algorithms were overlayed to provide a better visual comparison (naive bayes = black, SVMs in blue, GBM in red, and GLM in purple). We can easily discern Naive Bayes as the fastest in training, with gradient boosted model significantly better compared to the remaining ones. In Figure 6, their predicting times are compared. All the algorithms except for Naive Bayes demonstrate very fast predicting, though SVMs are an order of magnitude slower than either GLM or GBM. Finally, in Figure 7, we compare their accuracies. Naive Bayes has the lowest accuracy while GLM boats the best, followed closely by GBM and then SVMs. 
 
 \begin{figure}[H]
  \caption{Fitting times for the four algorithms (black: Naive Bayes, blue: SVM, red: GBM, purple: GLM)}
@@ -411,12 +412,16 @@ $1000$ & $0.274$ \\
     \includegraphics[width=8cm]{../data/all_fit}
 \end{figure}
 
-In Figure 5, the fitting times for the four algorithms were overlayed to provide a better visual comparison (naive bayes = black, SVMs in blue, GBM in red, and GLM in purple). In Figure 14, their predicting times are compared. And finally, in Figure 15, we compare their accuracies.
-
 \begin{figure}[H]
  \caption{Fitting times for the four algorithms (black: Naive Bayes, blue: SVM, red: GBM, purple: GLM)}
   \centering
     \includegraphics[width=8cm]{../data/all_pred}
+\end{figure}
+
+\begin{figure}[H]
+ \caption{Accuracies for the four algorithms (black: Naive Bayes, blue: SVM, red: GBM, purple: GLM)}
+  \centering
+    \includegraphics[width=8cm]{../data/all_acc}
 \end{figure}
 
 %------------------------------------------------
