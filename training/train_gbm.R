@@ -14,7 +14,7 @@ system.time(fitgbm[[1]]<-gbm.fit(x=datatrain[train0,], y=ytrain[train0]
                                  , distribution="bernoulli"
                                  , n.trees = 100
                                  , shrinkage = 1
-                                 , interaction.depth = 1
+                                 , interaction.depth = 2
                                  , n.minobsinnode = 10
                                  , keep.data = FALSE
                                  , verbose = FALSE))
@@ -124,28 +124,42 @@ pred[which(pred>=0.5)]<-1
 pred[which(pred<0.5)]<-0
 table(pred, ytest[small[[1]]], dnn=list('predicted','actual'))
 ############################################
-system.time(fit<-gbm.fit(x=datatrain
-                         , y=ytrain
-                         , distribution="bernoulli"
-                         
-                         , verbose = TRUE #prints preliminary output
-))
-#user  system elapsed 
-#657.627   3.792 660.302
-
-system.time(fit<-gbm.fit(x=datatrain
-                         , y=ytrain
-                         , distribution="bernoulli"
-                         , n.trees = 100
-                         , shrinkage = 1
-                         , interaction.depth = 1
-                         , n.minobsinnode = 10
-                         , keep.data = FALSE
-                         #, nTrain = round(dim(datatrain)[1] * 0.8) #data used for training
-                         , verbose = FALSE #prints preliminary output
-))
-
-summary(fit)
+predgbm<-predgbm2
+for(g in 1:length(predgbm)) {
+  p<-predgbm[[g]]
+  p[which(p>=0.5)]<-1
+  p[which(p<0.5)]<-0
+  predgbm[[g]]<-p
+}
+gbm_acc<-c(0,0,0)
+gbm_fp<-c(0,0,0)
+gbm_fn<-c(0,0,0)
+for(x in seq(4,8,1)) {
+  gbm_acc[1]<-gbm_acc[1]+
+    1-(sum(abs(ytest[small[[x]]] - predgbm[[x]]))/length(ytest[small[[x]]]))
+  gbm_fp[1]<-gbm_fp[1]+
+    table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  gbm_fn[1]<-gbm_fn[1]+
+    table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  gbm_acc[2]<-gbm_acc[2]+
+    1-(sum(abs(ytest[small[[x]]] - predgbm[[x+5]]))/length(ytest[small[[x]]]))
+  gbm_fp[2]<-gbm_fp[2]+
+    table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  gbm_fn[2]<-gbm_fn[2]+
+    table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  gbm_acc[3]<-gbm_acc[3]+
+    1-(sum(abs(ytest[small[[x]]] - predgbm[[x+10]]))/length(ytest[small[[x]]]))
+  gbm_fp[3]<-gbm_fp[3]+
+    table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
+  gbm_fn[3]<-gbm_fn[3]+
+    table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+}
+gbm_acc<-gbm_acc/5
+gbm_fp<-gbm_fp/5
+gbm_fn<-gbm_fn/5
+gbm_acc
+gbm_fp
+gbm_fn
 
 #Obtains optimal number of trees based on cv
 system.time(newtrees<-gbm.perf(fit))

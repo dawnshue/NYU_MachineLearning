@@ -55,12 +55,24 @@ K(xi,xj) = (xi\^T)xj + 1
 \end{center}
 
 \subsubsection*{Gradient Boosted Model}
-Gradient boosting model involves the application of boosting to regression trees. A gradient boosted model is initially composed of very simple trees and successive trees are added to predict the residuals of the preceding tree (27). Gradient boosted model, or generalized boosted model as it is called in the \textbf{gbm} package available in R, is considered to have several advantages over logistic regression: robustness to outliers, predicting on missing data, handling of unequal class sizes and unbalanced predictor variables, as well as tending to have greater predictive ability (7). Of course, a model is not without drawbacks, and GBM may suffer from overfitting especially if the number of ending nodes is too small or number of trees is too large (7). Thus, cross validation is highly recommended when using GBM.
+Gradient boosting model involves the application of boosting to regression trees. A gradient boosted model is initially composed of very simple trees and successive trees are added to predict the residuals of the preceding tree (27). The gradient boosted model is initialized as a constant below, and for m from 1 to M, the pseudo-residuals are computed and a base learner is trained with it. The multiplier is solved and the model updated for the next iteration of m (28):
+\begin{center}
+F(x) =  y
 
+F(x) = arg min\{f(x)\} SUM(y, f(x))
+\end{center}
+Gradient boosted model, or generalized boosted model as it is called in the \textbf{gbm} package available in R, is considered to have several advantages over logistic regression: robustness to outliers, predicting on missing data, handling of unequal class sizes and unbalanced predictor variables, as well as tending to have greater predictive ability (7). Of course, a model is not without drawbacks, and may suffer from overfitting especially if the number of ending nodes is too small or number of trees is too large (7). Thus, cross validation is highly recommended if gradient boosted model is the algorithm of choice. However, this study will observe how well the modeled works without the additional tuning via cross validation.
 
-
-
-
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
 \subsubsection*{LOGISTIC REGRESSION}
 (4) glmnet fits a generalized linear model via penalized maximum likelihood.
 (6) it can deal with all shapes of data, including very large sparse data matrices.
@@ -136,23 +148,45 @@ system.time(predsvm<-predict(
             ))
 \end{verbatim}
 
-
-
-
+\subsection*{Gradient Boosted Model}
+The \textbf{gbm} package in R allows control over several parameters. We set the distribution to "bernoulli" since this is a binary classification problem. The number of trees to fit dictates the number of iterations and basis functions in the additive expansion (29). Best practice would be to set the number of trees to a large number and prune it back afterwards, but to limit the modelling time, we will fit with 100 trees. The shrinkage is the step size or learning rate, which we chose to be 0.1. A smaller step would take longer to model although it could yield better performance. The interaction depth limits the maximum depth of variable interactions, where 1 would imply an additive model and 2 would imply up to two-way interaction, and so forth. Cross-validation can be used to determine the interaction depth. While increasing the interaction depth may produce a closer model, it will also increase the fitting time substantially. The \texttt{n.minobsinnode} parameter sets the minimum number of observations for a terminal node. Decreasing this value increases in-sample fit but therefore risks overfitting.
+\begin{verbatim}
+library(gbm)
+system.time(fitgbm<-gbm.fit(
+            x=datatrain[train0,]
+            , y=ytrain[train0]
+            , distribution="bernoulli"
+            , n.trees = 100
+            , shrinkage = 1
+            , interaction.depth = 2
+            , n.minobsinnode = 10
+            , keep.data = FALSE
+            , verbose = FALSE))
+system.time(newtrees<-gbm.perf(
+            fitgbm, method="cv"))
+system.time(predgbm<-predict.gbm(
+            object=fitgbm
+            , newdata=datatest
+            , n.trees=newtrees
+            , type="response"))
+\end{verbatim}
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
 \subsection*{LOGISTIC REGRESSION}
 We used \texttt{glmnet} (Generalized Linear Models) to generate logistic regression model.
 Then \texttt{predict.glm} is used to predict on the validation sample.
 (3) We then determine the how low of a predicted probability is needed to accurately classify the hispanic division.
-\subsection*{Gradient Boosted Regression Model}
-(7) we use distribution = bernoulli since this is a binary classification (use gaussian for adaboost), for n.trees we use a large number of trees that we can prune back later. The shrinkage is the step size, which we chose to be 0.1 since the a smaller step would take longer to model although it would yield better performance. Use cross-validation to determine interaction depth. Decreasing n.minobsinnode increases in-sample fit but risks overfitting. nTrain is used so that you can select the number of trees at the end.
-(8) General gbm parameter info
 \subsection*{Comparison}
 --Graph: times to model + times to predict (overlayed)
 --Graph: accuracy
-
-
-
-
 
 \section*{Results}
 \subsection*{RARE EVENTS=====}
@@ -166,7 +200,7 @@ Figure 1 depicts how the modelling time increased almost linear with restpect to
 \begin{Sinput}
 > m<-c(35000, 70000, 142433)
 > ftimes<-c(82.248, 167.030, 294.883)/60
-> plot(x=m,y=ftimes,type="l"
+> plot(x=m,y=ftimes,type="b"
 +      ,xlab="# training examples"
 +      ,ylab="time (min)")
 > #cor(m, ftimes) #0.9966318
@@ -196,7 +230,6 @@ Figure 1. Fitting time for Naive Bayes
 Figure 2. Predicting time for Naive Bayes
 \end{center}
 
-Figure 3
 \begin{Schunk}
 \begin{Sinput}
 > m<-c(35000, 70000, 142433)
@@ -207,7 +240,7 @@ Figure 3
 > yax<-c(-0.02,0.02)
 > plot(x=m,y=nb_acc,type="b"
 +      ,xlab="# training examples"
-+      ,ylab="Change in accuracy (%)"
++      ,ylab="d/dx accuracy (%)"
 +      ,ylim=yax
 +      )
 > par(new=TRUE)
@@ -232,7 +265,7 @@ Figure 3. Accuracy of Naive Bayes
 The Naive Bayes function has little opportunity for tuning. A brief test on modifying the laplace smoothing saw a decrease in fitting time but the accuracy also deteriorated.
 
 \subsection*{Support Vector Machines}
-From Figure 1, we see that the modelling time begins to increase exponentially as the number of training examples increases. In Figure 2, predicting time is linear with respect to the number of test cases and fairly quick. Figure 3 shows little change in the accuracy, a small decrease in the false-positive percent, and a vague increase in the false-negatives.
+From Figure 1, we see that the modelling time begins to increase exponentially as the number of training examples increases. At 140,000 plus data points, the modelling took more than 1.5 hours. In Figure 2, predicting time was nearly linear with respect to the number of test cases and fairly quick. Figure 3 shows little change in the accuracy, a small decrease in the false-positive percent, and a vague increase in the false-negatives. The accuracy of the SVM predictions averaged at 89.1\%.
 \begin{Schunk}
 \begin{Sinput}
 > m<-c(35000, 70000, 142433)
@@ -267,7 +300,6 @@ Figure 1. Fitting time for SVMs
 Figure 2. Predicting time for SVMs
 \end{center}
 
-Figure 3
 \begin{Schunk}
 \begin{Sinput}
 > m<-c(35000, 70000, 142433)
@@ -278,7 +310,7 @@ Figure 3
 > yax<-c(-0.002,0.002)
 > plot(x=m,y=acc,type="b"
 +      ,xlab="# training examples"
-+      ,ylab="Change in accuracy (%)"
++      ,ylab="d/dx accuracy (%)"
 +      ,ylim=yax
 +      )
 > par(new=TRUE)
@@ -301,13 +333,89 @@ Figure 3
 Figure 3. Accuracy of SVMs
 \end{center}
 
+\subsection*{Gradient Boosted Model}
+Gradient boosted models also take a significant amount of time to generate, but at least their times appears to only increase linearly as opposed to exponentially. Fitting slightly less than 150,000 data points took almost 40 minutes. However, as a tradeoff, the predicting times are extremely fast--only our largest test sample, it finished predicting in less than 1 second. Unlike SVMs and Naive Bayes, the accuracy did not appear to improve significantly when the model was fitted on more data. The accuracy averaged at around 89.4\%.
+\begin{Schunk}
+\begin{Sinput}
+> m<-c(35000, 70000, 142433)
+> ftimes<-c(569.411, 1145.877, 2349.197)/60
+> plot(x=m,y=ftimes,type="b"
++      ,xlab="# training examples"
++      ,ylab="time (min)")
+> #cor(m, ftimes) #0.9999978
+> #lm(ftimes ~ m) #m: 0.0002762
+\end{Sinput}
+\end{Schunk}
+\begin{center}
+=====[[NB1\_TIME]]=====
 
+Figure 1. Fitting time for GBM
+\end{center}
 
+\begin{Schunk}
+\begin{Sinput}
+> ptimes<-c(0.078, 0.133, 0.254, 0.464)/60
+> samples<-c(100,250,500,1000)
+> plot(x=sample,y=ptimes,type="b"
++      ,xlab="# test cases"
++      ,ylab="time (min)")
+> #cor(sample, ptimes) #0.9994819
+> #lm(ptimes ~ sample) #m: 7.225e-6
+\end{Sinput}
+\end{Schunk}
+\begin{center}
+=====[[NB2\_TIME]]=====
 
+Figure 2. Predicting time for GBM
+\end{center}
 
+\begin{Schunk}
+\begin{Sinput}
+> m<-c(35000, 70000, 142433)
+> acc<-c(0.8944,0.8932,0.8944)-0.8944
+> #ave(nb_acc): 0.8058667
+> fp<-c(0.0188,0.0200,0.0184)-0.0188
+> fn<-c(0.0868,0.0868,0.0872)-0.0868
+> yax<-c(-0.002,0.002)
+> plot(x=m,y=acc,type="b"
++      ,xlab="# training examples"
++      ,ylab="d/dx Accuracy (%)"
++      ,ylim=yax
++      )
+> par(new=TRUE)
+> plot(x=m,y=fp,type="b",axes=FALSE
++      ,xlab="",ylab="",col="blue"
++      ,ylim=yax
++      )
+> par(new=TRUE)
+> plot(x=m,y=fn,type="b",axes=FALSE
++      ,xlab="",ylab="",col="red"
++      ,ylim=yax
++      )
+> #cor(m, acc) #0.1972159
+\end{Sinput}
+\end{Schunk}
+\begin{center}
+=====[[NB3\_TIME]]=====
 
+Figure 3. Accuracy of GBM
+\end{center}
 
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+\subsection*{LOGISTIC REGRESSION}
 
+\subsection*{COMPARISON}
+Overlay fitting graphs.
+Overlay predicting graphs.
 
 
 
@@ -361,6 +469,8 @@ I would like to thank Patrick McCann at Cafemom for providing guidance for this 
   \item 20 http://cran.r-project.org/web/packages/bigrf/bigrf.pdf
   \item 21 http://www.jstatsoft.org/v15/i09/paper
   \item 27 http://www.statsoft.com/Textbook/Boosting-Trees-Regression-Classification
+  \item 28 http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3885826/
+  \item 29 http://www.inside-r.org/packages/cran/gbm/docs/gbm
 \end{itemize}
 
 
