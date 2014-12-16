@@ -142,33 +142,58 @@ accuracy<-1-(sum(abs(as.numeric(as.character(ytest[smalltest])) -
 svm_acc<-c(0,0,0)
 svm_fp<-c(0,0,0)
 svm_fn<-c(0,0,0)
+nb_prec<-c(0,0,0)
+nb_rec<-c(0,0,0)
 for(x in seq(4,8,1)) {
-  svm_acc[1]<-svm_acc[1]+
+  svm_acc[3]<-svm_acc[3]+
     1-(sum(abs(ytest[small[[x]]] - as.numeric(as.character(predsvm[[x]]))))/length(ytest[small[[x]]]))
-  svm_fp[1]<-svm_fp[1]+
+  svm_fp[3]<-svm_fp[3]+
     table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  svm_fn[1]<-svm_fn[1]+
+  svm_fn[3]<-svm_fn[3]+
     table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[3]<-nb_prec[3]+tp/(fp+tp)
+  tt<-table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predsvm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[3]<-nb_rec[3]+tp/tt
+  
   svm_acc[2]<-svm_acc[2]+
     1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predsvm[[x+5]]))))/length(ytest[small[[x]]]))
   svm_fp[2]<-svm_fp[2]+
     table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   svm_fn[2]<-svm_fn[2]+
     table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
-  svm_acc[3]<-svm_acc[3]+
+  tp<-table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[2]<-nb_prec[2]+tp/(fp+tp)
+  tt<-table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predsvm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[2]<-nb_rec[2]+tp/tt
+  
+  svm_acc[1]<-svm_acc[1]+
     1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predsvm[[x+10]]))))/length(ytest[small[[x]]]))
-  svm_fp[3]<-svm_fp[3]+
+  svm_fp[1]<-svm_fp[1]+
     table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  svm_fn[3]<-svm_fn[3]+
+  svm_fn[1]<-svm_fn[1]+
     table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[1]<-nb_prec[1]+tp/(fp+tp)
+  tt<-table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predsvm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[1]<-nb_rec[1]+tp/tt
 }
 svm_acc<-svm_acc/5
 svm_fp<-svm_fp/5
 svm_fn<-svm_fn/5
+nb_prec<-nb_prec/5
+nb_rec<-nb_rec/5
 svm_acc
 svm_fp
 svm_fn
-
+nb_prec
+nb_rec
 
 system.time(pred<-predict(fit
                           , newdata=datatest))

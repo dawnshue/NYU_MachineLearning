@@ -108,35 +108,62 @@ for(g in 1:length(predglm)) {
 summary(predglm2)
 oldglm<-predglm
 predglm<-predglm2
+
 glm_acc<-c(0,0,0)
 glm_fp<-c(0,0,0)
 glm_fn<-c(0,0,0)
+glm_prec<-c(0,0,0)
+glm_rec<-c(0,0,0)
 for(x in seq(4,8,1)) {
   glm_acc[3]<-glm_acc[3]+
-    1-(sum(abs(ytest[small[[x]]] - predglm[[x]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(ytest[small[[x]]] - as.numeric(as.character(predglm[[x]]))))/length(ytest[small[[x]]]))
   glm_fp[3]<-glm_fp[3]+
     table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   glm_fn[3]<-glm_fn[3]+
     table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  glm_prec[3]<-glm_prec[3]+tp/(fp+tp)
+  tt<-table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predglm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  glm_rec[3]<-glm_rec[3]+tp/tt
+  
   glm_acc[2]<-glm_acc[2]+
-    1-(sum(abs(ytest[small[[x]]] - predglm[[x+5]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predglm[[x+5]]))))/length(ytest[small[[x]]]))
   glm_fp[2]<-glm_fp[2]+
     table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   glm_fn[2]<-glm_fn[2]+
     table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  glm_prec[2]<-glm_prec[2]+tp/(fp+tp)
+  tt<-table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predglm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  glm_rec[2]<-glm_rec[2]+tp/tt
+  
   glm_acc[1]<-glm_acc[1]+
-    1-(sum(abs(ytest[small[[x]]] - predglm[[x+10]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predglm[[x+10]]))))/length(ytest[small[[x]]]))
   glm_fp[1]<-glm_fp[1]+
     table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   glm_fn[1]<-glm_fn[1]+
     table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  glm_prec[1]<-glm_prec[1]+tp/(fp+tp)
+  tt<-table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predglm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  glm_rec[1]<-glm_rec[1]+tp/tt
 }
 glm_acc<-glm_acc/5
 glm_fp<-glm_fp/5
 glm_fn<-glm_fn/5
+glm_prec<-glm_prec/5
+glm_rec<-glm_rec/5
 glm_acc
 glm_fp
 glm_fn
+glm_prec
+glm_rec
 
 
 

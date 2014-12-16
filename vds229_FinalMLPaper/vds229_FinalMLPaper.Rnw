@@ -214,23 +214,36 @@ Figure 2. Predicting time for Naive Bayes
 
 <<nb3,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-nb_acc<-c(0.8148, 0.8036,0.7992)-0.8148
+nb_acc<-c(0.8148, 0.8036,0.7992)
 #ave(nb_acc): 0.8058667
-nb_fp<-c(0.0052,0.0036,0.0056)-0.0052
-nb_fn<-c(0.1800,0.1928,0.1952)-0.1800
-yax<-c(-0.02,0.02)
+nb_fp<-c(0.0052,0.0036,0.0056)
+nb_fn<-c(0.1800,0.1928,0.1952)
+nb_prec<-c(0.7502720, 0.5466667, 0.1400000)
+nb_rec<-c(0.081879926, 0.016069743, 0.004476119)
+nb_f1<-2*nb_prec*nb_rec/(nb_prec+nb_rec)
+nb_acc<-nb_acc*100
+nb_fp<-nb_fp*100
+nb_fn<-nb_fn*100
+nb_prec<-nb_prec*100
+nb_rec<-nb_rec*100
+nb_acc<-nb_acc-nb_acc[1]
+nb_fp<-nb_fp-nb_fp[1]
+nb_fn<-nb_fn-nb_fn[1]
+nb_prec<-nb_prec-nb_prec[1]
+nb_rec<-nb_rec-nb_rec[1]
+yax<-c(-70,5)
 plot(x=m,y=nb_acc,type="b"
      ,xlab="# training examples"
-     ,ylab="d/dx accuracy (%)"
+     ,ylab="change (%)"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=nb_fp,type="b",axes=FALSE
+plot(x=m,y=nb_prec,type="b",axes=FALSE
      ,xlab="",ylab="",col="blue"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=nb_fn,type="b",axes=FALSE
+plot(x=m,y=nb_rec,type="b",axes=FALSE
      ,xlab="",ylab="",col="red"
      ,ylim=yax
      )
@@ -278,23 +291,36 @@ Figure 5. Predicting time for SVMs
 
 <<svm3,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-acc<-c(0.8916,0.8916,0.8908)-0.8916
+nb_acc<-c(0.8916, 0.8916, 0.8908)
 #ave(nb_acc): 0.8058667
-fp<-c(0.0176,0.0188,0.0196)-0.0176
-fn<-c(0.0908,0.0896,0.0896)-0.0908
-yax<-c(-0.002,0.002)
-plot(x=m,y=acc,type="b"
+nb_fp<-c(0.0176, 0.0188, 0.0196)
+nb_fn<-c(0.0908, 0.0896, 0.0896)
+nb_prec<-c(0.8570892, 0.8501864, 0.8446348)
+nb_rec<-c(0.5373421, 0.5434546, 0.5434546)
+nb_f1<-2*nb_prec*nb_rec/(nb_prec+nb_rec)
+nb_acc<-nb_acc*100
+nb_fp<-nb_fp*100
+nb_fn<-nb_fn*100
+nb_prec<-nb_prec*100
+nb_rec<-nb_rec*100
+nb_acc<-nb_acc-nb_acc[1]
+nb_fp<-nb_fp-nb_fp[1]
+nb_fn<-nb_fn-nb_fn[1]
+nb_prec<-nb_prec-nb_prec[1]
+nb_rec<-nb_rec-nb_rec[1]
+yax<-c(-2,2)
+plot(x=m,y=nb_acc,type="b"
      ,xlab="# training examples"
-     ,ylab="d/dx accuracy (%)"
+     ,ylab="change (%)"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=fp,type="b",axes=FALSE
+plot(x=m,y=nb_prec,type="b",axes=FALSE
      ,xlab="",ylab="",col="blue"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=fn,type="b",axes=FALSE
+plot(x=m,y=nb_rec,type="b",axes=FALSE
      ,xlab="",ylab="",col="red"
      ,ylim=yax
      )
@@ -343,23 +369,36 @@ Figure 8. Predicting time for GBM
 
 <<gbm3,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-acc<-c(0.8976,0.8952,0.9016)-0.8976
+nb_acc<-c(0.8944,0.8932, 0.8944)
 #ave(nb_acc): 
-fp<-c(0.016,0.0188,0.0156)-0.016
-fn<-c(0.0864,0.086,0.0828)-0.0864
-yax<-c(-0.004,0.004)
-plot(x=m,y=acc,type="b"
+nb_fp<-c(0.0184, 0.02, 0.0188)
+nb_fn<-c(0.0872, 0.0868, 0.0868)
+nb_prec<-c(0.8550397, 0.8448255, 0.85234855)
+nb_rec<-c(0.5554942, 0.5573291, 0.5573291)
+nb_f1<-2*nb_prec*nb_rec/(nb_prec+nb_rec)
+nb_acc<-nb_acc*100
+nb_fp<-nb_fp*100
+nb_fn<-nb_fn*100
+nb_prec<-nb_prec*100
+nb_rec<-nb_rec*100
+nb_acc<-nb_acc-nb_acc[1]
+nb_fp<-nb_fp-nb_fp[1]
+nb_fn<-nb_fn-nb_fn[1]
+nb_prec<-nb_prec-nb_prec[1]
+nb_rec<-nb_rec-nb_rec[1]
+yax<-c(-2,1)
+plot(x=m,y=nb_acc,type="b"
      ,xlab="# training examples"
-     ,ylab="d/dx Accuracy (%)"
+     ,ylab="change (%)"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=fp,type="b",axes=FALSE
+plot(x=m,y=nb_prec,type="b",axes=FALSE
      ,xlab="",ylab="",col="blue"
      ,ylim=yax
      )
 par(new=TRUE)
-plot(x=m,y=fn,type="b",axes=FALSE
+plot(x=m,y=nb_rec,type="b",axes=FALSE
      ,xlab="",ylab="",col="red"
      ,ylim=yax
      )
@@ -404,23 +443,39 @@ Figure 11. Predicting time for GLM
 
 <<gbm3,fig=FALSE,height=2,width=3>>=
 m<-c(35000, 70000, 142433)
-acc<-c(0.8976,0.9004,0.9012)-0.8976
+nb_acc<-c(0.8976,0.9004,0.9012)
 #ave(nb_acc): 0.8058667
-fp<-c(0.0152,0.0152,0.0132)-0.0152
-fn<-c(0.0872,0.0844,0.0856)-0.0872
-yax<-c(-0.004,0.004)
-plot(x=m,y=acc,type="b"
+nb_fp<-c(0.0152,0.0152,0.0132)
+nb_fn<-c(0.0872,0.0844,0.0856)
+nb_prec<-c(0.8771104, 0.8797985, 0.8925981)
+nb_rec<-c(0.5554839, 0.5695100, 0.5636063)
+nb_f1<-2*nb_prec*nb_rec/(nb_prec+nb_rec)
+nb_acc<-nb_acc*100
+nb_fp<-nb_fp*100
+nb_fn<-nb_fn*100
+nb_prec<-nb_prec*100
+nb_rec<-nb_rec*100
+nb_acc<-nb_acc-nb_acc[1]
+nb_fp<-nb_fp-nb_fp[1]
+nb_fn<-nb_fn-nb_fn[1]
+nb_prec<-nb_prec-nb_prec[1]
+nb_rec<-nb_rec-nb_rec[1]
+yax<-c(-1,2)
+plot(x=m,y=nb_acc,type="b"
      ,xlab="# training examples"
-     ,ylab="d/dx Accuracy (%)"
-     ,ylim=yax)
+     ,ylab="change (%)"
+     ,ylim=yax
+     )
 par(new=TRUE)
-plot(x=m,y=fp,type="b",axes=FALSE
+plot(x=m,y=nb_prec,type="b",axes=FALSE
      ,xlab="",ylab="",col="blue"
-     ,ylim=yax)
+     ,ylim=yax
+     )
 par(new=TRUE)
-plot(x=m,y=fn,type="b",axes=FALSE
+plot(x=m,y=nb_rec,type="b",axes=FALSE
      ,xlab="",ylab="",col="red"
-     ,ylim=yax)
+     ,ylim=yax
+     )
 #cor(m, acc) #0.1972159
 @
 \begin{center}
@@ -436,7 +491,7 @@ m<-c(35000, 70000, 142433)
 ftimes1<-c(82.248, 167.030, 294.883)/60
 ftimes2<-c(436.036, 1531.416, 6470.774)/60
 ftimes3<-c(1004.997, 2006.688, 4103.233)/60
-ftimes4<-c(951.781,2158.661,6102.381)/60
+ftimes4<-c(951.781,2158.661,6451.669)/60
 ytimes<-c(0,120)
 plot(x=m,y=ftimes1,type="b"
      ,xlab="# training examples"

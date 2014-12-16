@@ -121,32 +121,57 @@ plot(x=sample,y=ptimes/60,type="l"
 nb_acc<-c(0,0,0)
 nb_fp<-c(0,0,0)
 nb_fn<-c(0,0,0)
+nb_prec<-c(0,0,0)
+nb_rec<-c(0,0,0)
 for(x in seq(4,8,1)) {
-  nb_acc[1]<-nb_acc[1]+
-    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x]]))))/length(ytest[small[[x]]]))
-  nb_fp[1]<-nb_fp[1]+
+  nb_acc[3]<-nb_acc[3]+1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x]]))))/length(ytest[small[[x]]]))
+  nb_fp[3]<-nb_fp[3]+
     table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  nb_fn[1]<-nb_fn[1]+
+  nb_fn[3]<-nb_fn[3]+
     table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[3]<-nb_prec[3]+tp/(fp+tp)
+  tt<-table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(prednb[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[3]<-nb_rec[3]+tp/tt
+  
   nb_acc[2]<-nb_acc[2]+
     1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x+5]]))))/length(ytest[small[[x]]]))
   nb_fp[2]<-nb_fp[2]+
     table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   nb_fn[2]<-nb_fn[2]+
     table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
-  nb_acc[3]<-nb_acc[3]+
+  tp<-table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[2]<-nb_prec[2]+tp/(fp+tp)
+  tt<-table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(prednb[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[2]<-nb_rec[2]+tp/tt
+  
+  nb_acc[1]<-nb_acc[1]+
     1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(prednb[[x+10]]))))/length(ytest[small[[x]]]))
-  nb_fp[3]<-nb_fp[3]+
+  nb_fp[1]<-nb_fp[1]+
     table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
-  nb_fn[3]<-nb_fn[3]+
+  nb_fn[1]<-nb_fn[1]+
     table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  nb_prec[1]<-nb_prec[1]+tp/(fp+tp)
+  tt<-table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(prednb[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  nb_rec[1]<-nb_rec[1]+tp/tt
 }
 nb_acc<-nb_acc/5
 nb_fp<-nb_fp/5
 nb_fn<-nb_fn/5
+nb_prec<-nb_prec/5
+nb_rec<-nb_rec/5
 nb_acc
 nb_fp
 nb_fn
+nb_prec
+nb_rec
 
 ROCsdat <- data.frame(cutpoint = c(-Inf, 5, 7, 9, Inf), TPR = c(0, 0.56, 0.78, 0.91, 1), FPR = c(0, 0.01, 0.19, 0.58, 1)) 
 

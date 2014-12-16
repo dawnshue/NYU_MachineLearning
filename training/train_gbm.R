@@ -137,32 +137,58 @@ for(g in 1:length(predgbm)) {
 gbm_acc<-c(0,0,0)
 gbm_fp<-c(0,0,0)
 gbm_fn<-c(0,0,0)
+gbm_prec<-c(0,0,0)
+gbm_rec<-c(0,0,0)
 for(x in seq(4,8,1)) {
   gbm_acc[3]<-gbm_acc[3]+
-    1-(sum(abs(ytest[small[[x]]] - predgbm[[x]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(ytest[small[[x]]] - as.numeric(as.character(predgbm[[x]]))))/length(ytest[small[[x]]]))
   gbm_fp[3]<-gbm_fp[3]+
     table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   gbm_fn[3]<-gbm_fn[3]+
     table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  gbm_prec[3]<-gbm_prec[3]+tp/(fp+tp)
+  tt<-table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predgbm[[x]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  gbm_rec[3]<-gbm_rec[3]+tp/tt
+  
   gbm_acc[2]<-gbm_acc[2]+
-    1-(sum(abs(ytest[small[[x]]] - predgbm[[x+5]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predgbm[[x+5]]))))/length(ytest[small[[x]]]))
   gbm_fp[2]<-gbm_fp[2]+
     table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   gbm_fn[2]<-gbm_fn[2]+
     table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  gbm_prec[2]<-gbm_prec[2]+tp/(fp+tp)
+  tt<-table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predgbm[[x+5]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  gbm_rec[2]<-gbm_rec[2]+tp/tt
+  
   gbm_acc[1]<-gbm_acc[1]+
-    1-(sum(abs(ytest[small[[x]]] - predgbm[[x+10]]))/length(ytest[small[[x]]]))
+    1-(sum(abs(as.numeric(as.character(ytest[small[[x]]])) - as.numeric(as.character(predgbm[[x+10]]))))/length(ytest[small[[x]]]))
   gbm_fp[1]<-gbm_fp[1]+
     table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]/length(ytest[small[[x]]])
   gbm_fn[1]<-gbm_fn[1]+
     table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]/length(ytest[small[[x]]])
+  tp<-table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  fp<-table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,1]
+  gbm_prec[1]<-gbm_prec[1]+tp/(fp+tp)
+  tt<-table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[1,2]+
+    table(predgbm[[x+10]], ytest[small[[x]]], dnn=list('predicted','actual'))[2,2]
+  gbm_rec[1]<-gbm_rec[1]+tp/tt
 }
 gbm_acc<-gbm_acc/5
 gbm_fp<-gbm_fp/5
 gbm_fn<-gbm_fn/5
+gbm_prec<-gbm_prec/5
+gbm_rec<-gbm_rec/5
 gbm_acc
 gbm_fp
 gbm_fn
+gbm_prec
+gbm_rec
 
 #Obtains optimal number of trees based on cv
 system.time(newtrees<-gbm.perf(fit))

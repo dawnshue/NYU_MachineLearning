@@ -101,12 +101,12 @@ This project investigates the application of machine learning in advertising tec
 
 \lettrine[nindent=0em,lines=3]{O} nline advertising has undergone sweeping development thanks to fairly recent but rapid innovation and advancement of tools allowing advertisers to automate the management, evaluation, and analysis of their display advertising campaigns. Services like Nielsen Online Campaign Ratings for example, provide demand-side clients, the advertisers, with the ability to determine whether their ads are reaching particular user populations that are more likely to be interested in their products. On the supply-side, companies like Mediamath offer management applications that allow the publishers more control over how their ads are distributed such as by setting daily impression caps and black- or white-listing particular websites. With these improvements to help streamline campaign management, advertisers can now focus on solving more abstract questions and develop more fine-tuned targeting strategies, thus improving the return on their investments\cite{12}.
 
-There is a great opportunity to utilize machine learning in identifying pertinent users so that more relevant ads can be targeted to them. Publishers can track how their users typically navigate their sites through tracking pixels and cookies\cite{13}. With services like Demdex, a data management platform, they can create traits to define their users. Multiple traits can be further clustered into segments. When publishers receive their impression reports, they are able to see which traits/segments a particular cookie (or "user") satisfies. In machine learning, traits and segments would be analogous to features, while each cookie can act as a data point. As such, a medium-sized company, with nearly four million cookies accessing their sites per day, quickly aggregates a tremendous amount of data.
+There is a great opportunity to utilize machine learning in identifying pertinent users so that more relevant ads can be targeted to them. Publishers can track how their users typically navigate their sites through tracking pixels and cookies\cite{13}. With services like Demdex, a data management platform, they can create traits to define their users. Multiple traits can be further clustered into segments. When publishers receive their impression reports, they are able to see which traits/segments a particular cookie (or "user") satisfies. In machine learning, traits and segments would be analogous to features, while each cookie can act as a data point. By joining tables by user IDs, we can aggregate additional features from other data management platforms. Our feature space ends up covering geographical/ip data from Digital Envoy, behavior data from Click Stream, and Cafemom's own site interaction/registration data. As such, a medium-sized company, with nearly four million cookies accessing their sites per day, quickly aggregates a tremendous amount of data.
 
 CafeMom is an online community for moms to come together to exchange advice and support on topics like pregnancy, health, etc. One of their flagship services is MamasLatinas, a site geared towards providing a more relevant community for Hispanic moms. Many advertisers commission CafeMom to help bring their products to Hispanic moms, leading CafeMom to need to develop a reliable model to identify Hispanic women so that they can target these users in both on- and off-site advertisements. But even a simple problem like binary classification can be modeled in many ways in machine learning. This project therefore seeks to provide a preliminary evaluation of the typical learning algorithms that could solve this problem: Naive Bayes, Gradient Boosting, Logistic Regression, and Support Vector Machines. Advertising data is big in scale not only because there are so many online users, but also because it contains a tremendous number of features. As such, the study will need to compare these algorithms both in terms of how quickly they can model the data and how accurately their model predicts on test data.
 
 \subsection{Classifying Rare Events}
-While CafeMom may be able to obtain a significant amount of information on Hispanic users through MamasLatinas, they are interested in seeing how these users navigate on other sites in order for them to be able to identify Hispanic moms on affiliated sites. In addition, when sampling, we must be careful not to select on X differently for the two samples \cite{1}. Therefore, our project only guarantees a Hispanic user based on their User Agent language. The complement is only considered to be users who use English for their User Agent. As such, in the grand schemes of all their users, Hispanic moms actually constitute only around 2\% of their known population of data. Identifying a Hispanic mom is therefore actually a fairly rare event.
+While CafeMom may be able to obtain a significant amount of information on Hispanic users through MamasLatinas, they are interested in seeing how these users navigate on other sites in order for them to be able to identify Hispanic moms on affiliated sites. In addition, when sampling, we must be careful not to select on X differently for the two samples \cite{1}. Therefore, our project only guarantees a Hispanic user based on their "accept-language" field in the HTTP header. The complement is only considered to be users who use English for their "accept-language". As such, in the grand schemes of all their users, Hispanic moms actually constitute only around 2\% of their known population of data. Identifying a Hispanic mom is therefore actually a fairly rare event.
 
 According to King and Zeng, rare events tend to be difficult to explain and predict\cite{1}. Either logistic regression algorithms will sharply underestimate these events or data collection strategies are grossly inefficient\cite{1}. In addition, the authors identified that rare events are actually more statistically informative than "zeros"\cite{1}. King and Zeng determined that they could achieve better results by sampling all available events and only a tiny fraction of non-events. This method would also have the added benefit of being more efficient since you would not have to model over [as] tremendous amounts of data in order to get a sufficient number of events while maintaining the event probability.
 
@@ -130,7 +130,7 @@ Support Vector Machines are among the most popular and efficient classification 
 \subsubsection{Gradient Boosted Model}
 Gradient boosting model involves the application of boosting to regression trees. A gradient boosted model is initially composed of very simple trees and successive trees are added to predict the residuals of the preceding tree\cite{27}. Gradient boosted model, or generalized boosted model as it is called in the \textbf{gbm} package available in R, is considered to have several advantages over logistic regression: robustness to outliers, predicting on missing data, handling of unequal class sizes and unbalanced predictor variables, as well as tending to have greater predictive ability\cite{7}. Of course, a model is not without drawbacks, and may suffer from overfitting especially if the number of ending nodes is too small or number of trees is too large\cite{7}. Thus, cross validation is highly recommended if gradient boosted model is the algorithm of choice. However, this study will observe how well the modeled works without the additional tuning via cross validation.
 
-\subsubsection{Logistic Regression}
+\subsubsection{Regularized Logistic Regression}
 It shouldn't come as a surprise that logistic regression was included in our survey algorithms. Logistic regression is actually a model for classification, and typically binary classification, contrary to what its name might suggest\cite{30}. It is based on the logistic function, \(F(t)\) where \texttt{t} is a linear function of an explanatory variable \texttt{x}, which outputs a binary value given an input that can range from positive to negative infinity\cite{10}:
 \[ F(t) = 1/(1 + e^{-t}) \]
 Logistic regression is in fact part of a broader family of models, known as generalized linear models. Logistic regression is the subset where the response is binomial\cite{32}. This study will actually be investigating the logistic regression implementation in the \textbf{glmnet} package as it is intended for large datasets. \texttt{glmnet} fits a generalized linear model via penalized maximum likelihood\cite{4}. It boasts a robust implementation that can handle very large sparse matrices\cite{6}, a particular data structure in \texttt{R}. As such, using \textbf{glmnet} would enable training on data even a hundred times larger than what the other methods studied here can handle. Of course, training on such large data will still be very slow and memory-intensive even with this particular package.
@@ -230,10 +230,10 @@ system.time(predgbm<-predict.gbm(
             , type="response"))
 \end{verbatim}
 
-\subsection{Logistic Regression}
+\subsection{Regularized Logistic Regression}
 We used \texttt{glmnet} to generate our logistic regression models. Its usage is quite straightforward in R. Besides setting the family parameter to "binomial", all other parameters were kept at default values. This meant that the features were equally weighted, there was no offset, the elasticnet mixing parameter alpha was 1 (LASSO penalty), and the number of lambda values was 100\cite{4}. The LASSO penalty, or least absolute shrinkage and selection operator, penalizes the absolute size of the regression coefficients. The remaining parameters were undefined as they did not apply to the binomial problem.
 \begin{verbatim}
-library(gbm)
+library(glmnet)
 system.time(fitglm<-glmnet(
             x=datatrain[train0,]
             , y=ytrain[train0]
@@ -247,6 +247,9 @@ system.time(predglm<-predict(
 %------------------------------------------------
 
 \section{Results}
+
+For each algorithm, we present their modeling times vs the sample size (m) of the training data. The second table will present their predicting times against the sample size of the testing data. The third table summaries the algorithm's performance in terms of their percent accuracy (correct predictions over test sample size) and their F1 score:
+\[ F_1 = 2*(precision * recall)/(precision + recall) \]
 
 \subsection{Naive Bayes}
 
@@ -281,11 +284,26 @@ $1000$ & $335.145$ \\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\caption{Naive Bayes performance}
+\centering
+\begin{tabular}{llr}
+\toprule
+m (\#) & Accuracy (\%) & F1 Score \\
+\midrule
+$35000$ & $81.48$ & $0.1476$ \\
+$70000$ & $80.36$ & $0.0312$ \\
+$142433$ & $79.92$ & $0.0087$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
- \caption{Naive Bayes performance (black: accuracy, blue: false-positve, red: false-negative)}
+ \caption{Naive Bayes performance change (black: accuracy, blue: precision, red: recall)}
   \centering
-    \includegraphics[width=8cm]{../data/nb_acc}
+    \includegraphics[width=8cm]{../data/nb_change}
 \end{figure}
+
 
 \subsection{Support Vector Machines}
 From Figure 1, we see that the modelling time begins to increase exponentially as the number of training examples increases. At 140,000 plus data points, the modelling took more than 1.5 hours. In Figure 2, predicting time was nearly linear with respect to the number of test cases and fairly quick. Figure 3 shows small decrease in the accuracy, a small decrease in the false-negatives percent, and an increase in false-positives. The accuracy of the SVM predictions averaged at 89.1\%.
@@ -319,10 +337,24 @@ $1000$ & $14.865$ \\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\caption{SVM performance}
+\centering
+\begin{tabular}{llr}
+\toprule
+m (\#) & Accuracy (\%) & F1 Score \\
+\midrule
+$35000$ & $89.16$ & $0.6606$ \\
+$70000$ & $89.16$ & $0.6631$ \\
+$142433$ & $89.08$ & $0.6614$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
- \caption{SVM performance (black: accuracy, blue: false-positve, red: false-negative)}
+ \caption{SVM performance change (black: accuracy, blue: precision, red: recall)}
   \centering
-    \includegraphics[width=8cm]{../data/svm_acc}
+    \includegraphics[width=8cm]{../data/svm_change}
 \end{figure}
 
 \subsection{Gradient Boosted Model}
@@ -359,13 +391,27 @@ $1000$ & $0.464$ \\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\caption{GBM performance}
+\centering
+\begin{tabular}{llr}
+\toprule
+m (\#) & Accuracy (\%) & F1 Score \\
+\midrule
+$35000$ & $89.44$ & $0.6735$ \\
+$70000$ & $89.32$ & $0.6716$ \\
+$142433$ & $89.44$ & $0.6740$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
- \caption{GBM performance (black: accuracy, blue: false-positve, red: false-negative)}
+ \caption{GBM performance change (black: accuracy, blue: precision, red: recall)}
   \centering
-    \includegraphics[width=8cm]{../data/gbm_acc}
+    \includegraphics[width=8cm]{../data/gbm_change}
 \end{figure}
 
-\subsection{Logistic Regression}
+\subsection{Regularized Logistic Regression}
 The fitting time for \textbf{glmnet} also increase significantly with additional training examples in a seemingly exponential fashion. The fitting time for our largest training set was almost as poor as that of the SVMs. The predicting time is the smallest of the four algorithms, at almost half that of the general boosted model. More importantly, \textbf{glmnet} exhibits the best accuracy, averaging at 90\% for all the tests. It also showed some improved fit with additional training data.
 
 \begin{table}[H]
@@ -377,7 +423,7 @@ m (\#) & Time (s) \\
 \midrule
 $35000$ & $951.781$ \\
 $70000$ & $2158.661$ \\
-$142433$ & $6102.381$ \\
+$142433$ & $6451.669$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -397,10 +443,24 @@ $1000$ & $0.274$ \\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\caption{GLM performance}
+\centering
+\begin{tabular}{llr}
+\toprule
+m (\#) & Accuracy (\%) & F1 Score \\
+\midrule
+$35000$ & $89.76$ & $0.6802$ \\
+$70000$ & $90.04$ & $0.6914$ \\
+$142433$ & $90.12$ & $0.6909$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
- \caption{GLM performance (black: accuracy, blue: false-positve, red: false-negative)}
+ \caption{GLM performance change (black: accuracy, blue: precision, red: recall)}
   \centering
-    \includegraphics[width=8cm]{../data/glm_acc}
+    \includegraphics[width=8cm]{../data/glm_change}
 \end{figure}
 
 \subsection{Comparison}
@@ -430,9 +490,9 @@ In Figure 5, the fitting times for the four algorithms were overlayed to provide
 
 In this study, we performed a comparison of several machine learning algorithms in order to determine which would be most appropriate for our use case. Advertising technology problems often involves tremendous amounts of data with similarly large feature space. We also need to consider the predicting times because all test data will need to be scored against the model. In addition, models need to be generated regularly to adapt to new data and changes in user behavior. This creates a very unique problem where both time and accuracy need to be balanced.
 
-Our results suggest that in their basic implementations, Naive Bayes has demonstrated the worst behavior. Though it can generate a model in linear time, the accuracy was very poor compared to the other algorithms. In addition, predicting on test data took longer compared to the other algorithms. This will eventually be problematic given that huge test samples will need to be scored with the model. Support Vector Machines demonstrated good accuracy, but their fitting time was problematic, increasing exponentially given additional data. Their predicting time was decent, but an order of magnitude slower than that of the gradient boosted model and generalized linear model. Gradient Boosted Model and Generalized Linear Model were fairly similar and equally promising in their performance. Both predicted quickly, at less than a second for more than 100,000 test cases, and their accuracies were both around 90\%. The generalized linear model however appears to increase more sharply in fitting time as the training sample gets larger, though it has the advantage of being able to read larger datasets than \textbf{gbm}.
+Our results suggest that in their basic implementations, Naive Bayes has demonstrated the worst behavior. Though it can generate a model in linear time, the accuracy was very poor compared to the other algorithms. In addition, predicting on test data took longer compared to the other algorithms. This will eventually be problematic given that huge test samples will need to be scored with the model. Support Vector Machines demonstrated good accuracy, but their fitting time was problematic, increasing exponentially given additional data. Their predicting time was decent, but an order of magnitude slower than that of the gradient boosted model and generalized linear model. Gradient Boosted Model and Generalized Linear Model were fairly similar and equally promising in their performance. Both predicted quickly, at less than a second for more than 100,000 test cases, and their accuracies were both around 90\%. The regularized logistic regression model however appears to increase more sharply in fitting time as the training sample gets larger, though it has the advantage of being able to read larger datasets than \textbf{gbm}.
 
-Our results should not be interpreted as a standard comparison of these algorithms. Since most algorithms, and their implementations in R, allow for the tuning of parameters (such as decreasing the learning rate), without a doubt, the performance of these algorithms could be improved to yield more precise results. We did perform some preliminary tuning tests to demonstrate performance-changes based on tuning parameters. For example, increasing interaction depth did increased fitting time for \textbf{gbm} but does not appear to improve the predicting ability of the model. This project mainly seeks to provide a general approach for evaluating classification models, particularly in the context of our use case in display advertising.
+Our results should not be interpreted as a standard comparison of these algorithms. Since most algorithms, and their implementations in R, allow for the tuning of parameters (such as decreasing the learning rate), without a doubt, the performance of these algorithms could be improved to yield more precise results. We did perform some preliminary tuning tests to demonstrate performance-changes based on tuning parameters. For example, increasing interaction depth did increase fitting time for \textbf{gbm} but does not appear to improve the predicting ability of the model. This project mainly seeks to provide a general approach for evaluating classification models, particularly in the context of our use case in display advertising.
 
 This study also confirms Zeng and King's methodology of training with rare event data. Though hispanic users are only 2\% of our raw training data, we oversampled them to achieve a 20\% distribution. The models were still able to achieve a 90\% accuracy in their predictions on non-biased sample. This confirms that we can reliably utilize a weighted dataset of rare events to perform our training, enabling us to model efficiently yet remaining equally if not more accurate.
 
