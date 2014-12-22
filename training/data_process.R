@@ -190,3 +190,10 @@ small[[8]]<-small5
 
 save.image(file='weighted_smallsub.RData')
 
+eventstrain<-length(which(ytrain==1))
+save(eventstrain, pevents, datatrain, datatest, ytrain, ytest, file='weighted_small.RData')
+small<-list()
+x<-1000
+c(sample(seq(1,eventstrain,1),round(x*pevents)),sample(seq(eventstrain+1,length(ytrain),1),round(x-x*pevents)))
+
+
